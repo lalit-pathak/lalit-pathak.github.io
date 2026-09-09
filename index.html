@@ -89,19 +89,37 @@
     outline-offset: 3px;
   }
 
-  /* Hero waveform — single orchestrated reveal */
-  .hero-waveform{
-    opacity: 0;
-    transform: scaleX(0.94);
-    transform-origin: left center;
-    animation: waveformReveal 1.6s cubic-bezier(.22,.7,.3,1) forwards;
-    animation-delay: .1s;
+  /* Hero waveform — noise resolves into the clean signal, single orchestrated moment */
+  .hero-waveform-wrap{
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+    margin: 0 auto;
+    aspect-ratio: 2.5 / 1;
   }
-  @keyframes waveformReveal{ to{ opacity: 1; transform: scaleX(1); } }
+  .hero-waveform-wrap img{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .wave-noisy{
+    animation: waveNoisyFade 3.2s ease forwards;
+    animation-delay: .2s;
+  }
+  .wave-clean{
+    opacity: 0;
+    animation: waveCleanReveal 3.2s ease forwards;
+    animation-delay: .2s;
+  }
+  @keyframes waveNoisyFade{ 0%{ opacity: 1; } 55%{ opacity: 1; } 100%{ opacity: 0; } }
+  @keyframes waveCleanReveal{ 0%{ opacity: 0; } 55%{ opacity: 0; } 100%{ opacity: 1; } }
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior: auto; }
-    .hero-waveform{ animation: none; opacity: 1; transform: none; }
+    .wave-noisy{ animation: none; opacity: 0; }
+    .wave-clean{ animation: none; opacity: 1; }
   }
 
   .accordion-body{
@@ -215,8 +233,10 @@
     </div>
 
     <div class="md:col-span-5">
-      <img src="chirp-waveform.svg" alt="Simulated gravitational-wave strain from a compact-binary merger, amplitude and frequency rising toward the merger"
-        class="hero-waveform w-full h-auto max-w-lg mx-auto">
+      <div class="hero-waveform-wrap" role="img" aria-label="A noisy gravitational-wave detector signal resolving into the clean simulated strain from a compact-binary merger">
+        <img src="chirp-waveform_with_noise.svg" alt="" class="wave-noisy" aria-hidden="true">
+        <img src="chirp-waveform.svg" alt="" class="wave-clean" aria-hidden="true">
+      </div>
     </div>
 
   </div>
