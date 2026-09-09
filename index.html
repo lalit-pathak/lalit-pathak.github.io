@@ -89,21 +89,19 @@
     outline-offset: 3px;
   }
 
-  /* Hero chirp waveform — single orchestrated draw-in */
-  .chirp-path{
-    stroke-dasharray: 1400;
-    stroke-dashoffset: 1400;
-    animation: draw 2.8s cubic-bezier(.22,.7,.3,1) forwards;
+  /* Hero waveform — single orchestrated reveal */
+  .hero-waveform{
+    opacity: 0;
+    transform: scaleX(0.94);
+    transform-origin: left center;
+    animation: waveformReveal 1.6s cubic-bezier(.22,.7,.3,1) forwards;
+    animation-delay: .1s;
   }
-  .chirp-grid{ opacity: 0; animation: fadeIn 1s ease forwards; animation-delay: .1s; }
-  .chirp-merger{ opacity: 0; animation: fadeIn .5s ease forwards; animation-delay: 2.5s; }
-  @keyframes draw{ to{ stroke-dashoffset: 0; } }
-  @keyframes fadeIn{ to{ opacity: 1; } }
+  @keyframes waveformReveal{ to{ opacity: 1; transform: scaleX(1); } }
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior: auto; }
-    .chirp-path{ animation: none; stroke-dashoffset: 0; }
-    .chirp-grid, .chirp-merger{ animation: none; opacity: 1; }
+    .hero-waveform{ animation: none; opacity: 1; transform: none; }
   }
 
   .accordion-body{
@@ -217,29 +215,8 @@
     </div>
 
     <div class="md:col-span-5">
-      <svg viewBox="0 0 420 260" class="w-full h-auto max-w-md mx-auto" aria-hidden="true">
-        <g class="chirp-grid stroke-line" stroke-width="1">
-          <line x1="0" y1="60" x2="420" y2="60"/>
-          <line x1="0" y1="130" x2="420" y2="130"/>
-          <line x1="0" y1="200" x2="420" y2="200"/>
-        </g>
-        <path class="chirp-path stroke-accent" fill="none" stroke-width="2" stroke-linecap="round"
-          d="M0 130
-             C 20 128, 40 132, 60 130
-             C 80 128, 95 133, 110 127
-             C 122 122, 132 138, 144 122
-             C 154 108, 164 150, 176 106
-             C 186 92, 196 166, 210 92
-             C 220 76, 232 182, 246 78
-             C 258 60, 270 198, 284 66
-             C 292 56, 300 96, 306 130
-             C 312 158, 320 108, 328 130
-             C 336 148, 344 116, 352 130
-             C 362 142, 372 122, 384 130
-             C 394 136, 406 126, 420 130"/>
-        <circle class="chirp-merger fill-accent" cx="284" cy="66" r="4"/>
-        <text x="292" y="52" class="chirp-merger arxiv-tag" fill="var(--text-muted)">merger</text>
-      </svg>
+      <img src="chirp-waveform.svg" alt="Simulated gravitational-wave strain from a compact-binary merger, amplitude and frequency rising toward the merger"
+        class="hero-waveform w-full h-auto max-w-lg mx-auto">
     </div>
 
   </div>
