@@ -90,6 +90,79 @@
     outline-offset: 3px;
   }
 
+
+  /* Click-to-enlarge photo gallery */
+  .gallery-trigger{ cursor: zoom-in; }
+  .gallery-trigger:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 1rem; }
+  .gallery-caption:empty{ display: none; }
+  .lightbox{
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(0,0,0,.88);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease;
+  }
+  .lightbox.open{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .lightbox-inner{
+    position: relative;
+    width: min(96vw, 1100px);
+    max-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lightbox-image{
+    display: block;
+    max-width: 100%;
+    max-height: 84vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: .75rem;
+    box-shadow: 0 20px 70px rgba(0,0,0,.45);
+  }
+  .lightbox-caption{
+    max-width: 52rem;
+    margin-top: .85rem;
+    text-align: center;
+    color: rgba(255,255,255,.78);
+    font-size: .9rem;
+    line-height: 1.5;
+  }
+  .lightbox-caption:empty{ display: none; }
+  .lightbox-close{
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 999px;
+    background: rgba(0,0,0,.35);
+    color: white;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .lightbox-close:hover{ background: rgba(255,255,255,.12); }
+  body.lightbox-open{ overflow: hidden; }
+  @media (prefers-reduced-motion: reduce){
+    .lightbox{ transition: none; }
+  }
+
   /* Hero waveform — noise resolves into the clean signal, single orchestrated moment */
   .hero-waveform-wrap{
     position: relative;
@@ -911,33 +984,42 @@
 
       <div class="grid md:grid-cols-3 gap-5">
         <figure class="group">
-          <div class="overflow-hidden rounded-2xl border border-hair">
-            <img
-              src="images/ajanta-ellora-01.jpg"
-              alt="Rock-cut architecture at the Ajanta and Ellora Caves"
-              class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              loading="lazy">
-          </div>
+          <button type="button" class="gallery-trigger block w-full text-left" data-gallery-image="images/ajanta-ellora-01.jpg" data-gallery-caption="" aria-label="Open image: Ajanta and Ellora Caves">
+            <div class="overflow-hidden rounded-2xl border border-hair">
+              <img
+                src="images/ajanta-ellora-01.jpg"
+                alt="Rock-cut architecture at the Ajanta and Ellora Caves"
+                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                loading="lazy">
+            </div>
+          </button>
+          <figcaption class="gallery-caption text-sm text-muted mt-3"></figcaption>
         </figure>
 
         <figure class="group">
-          <div class="overflow-hidden rounded-2xl border border-hair">
-            <img
-              src="images/ajanta-ellora-02.jpg"
-              alt="Stone sculpture inside the Ajanta and Ellora Caves"
-              class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              loading="lazy">
-          </div>
+          <button type="button" class="gallery-trigger block w-full text-left" data-gallery-image="images/ajanta-ellora-02.jpg" data-gallery-caption="" aria-label="Open image: Ajanta and Ellora Caves">
+            <div class="overflow-hidden rounded-2xl border border-hair">
+              <img
+                src="images/ajanta-ellora-02.jpg"
+                alt="Stone sculpture inside the Ajanta and Ellora Caves"
+                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                loading="lazy">
+            </div>
+          </button>
+          <figcaption class="gallery-caption text-sm text-muted mt-3"></figcaption>
         </figure>
 
         <figure class="group">
-          <div class="overflow-hidden rounded-2xl border border-hair">
-            <img
-              src="images/ajanta-ellora-03.jpg"
-              alt="Rock-cut sculpture inside the Ajanta and Ellora Caves"
-              class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              loading="lazy">
-          </div>
+          <button type="button" class="gallery-trigger block w-full text-left" data-gallery-image="images/ajanta-ellora-03.jpg" data-gallery-caption="" aria-label="Open image: Ajanta and Ellora Caves">
+            <div class="overflow-hidden rounded-2xl border border-hair">
+              <img
+                src="images/ajanta-ellora-03.jpg"
+                alt="Rock-cut sculpture inside the Ajanta and Ellora Caves"
+                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                loading="lazy">
+            </div>
+          </button>
+          <figcaption class="gallery-caption text-sm text-muted mt-3"></figcaption>
         </figure>
       </div>
     </div>
@@ -1094,6 +1176,16 @@
 
 </main>
 
+
+<!-- ============ IMAGE LIGHTBOX ============ -->
+<div id="image-lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Expanded photograph" aria-hidden="true">
+  <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close enlarged image">&times;</button>
+  <div class="lightbox-inner">
+    <img id="lightbox-image" class="lightbox-image" src="" alt="">
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+</div>
+
 <!-- ============ FOOTER ============ -->
 <footer class="px-6 md:px-10 py-10 border-t border-hair">
   <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted">
@@ -1150,6 +1242,48 @@
     lvkToggle.setAttribute('aria-expanded', String(isOpen));
     lvkToggle.textContent = isOpen ? 'Show fewer' : 'Show all 14';
   });
+
+  // ---------- Photography lightbox ----------
+  const lightbox = document.getElementById('image-lightbox');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxClose = document.getElementById('lightbox-close');
+  let lastGalleryTrigger = null;
+
+  function openLightbox(trigger){
+    lastGalleryTrigger = trigger;
+    lightboxImage.src = trigger.dataset.galleryImage;
+    lightboxImage.alt = trigger.querySelector('img')?.alt || 'Expanded photograph';
+    lightboxCaption.textContent = trigger.dataset.galleryCaption || '';
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lightbox-open');
+    lightboxClose.focus();
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lightbox-open');
+    lightboxImage.src = '';
+    lightboxCaption.textContent = '';
+    if(lastGalleryTrigger) lastGalleryTrigger.focus();
+  }
+
+  document.querySelectorAll('.gallery-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => openLightbox(trigger));
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', event => {
+    if(event.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', event => {
+    if(!lightbox.classList.contains('open')) return;
+    if(event.key === 'Escape') closeLightbox();
+  });
+
 </script>
 
 </body>
