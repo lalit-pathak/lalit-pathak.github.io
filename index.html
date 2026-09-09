@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lalit Pathak — Gravitational-Wave Astrophysics</title>
+<meta name="description" content="Lalit Pathak, Postdoctoral Fellow at IUCAA, Pune — gravitational-wave data analysis, compact-binary astrophysics, and tests of general relativity.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root{
+    --bg: #06070D;
+    --bg-alt: #0E1019;
+    --surface: #12141F;
+    --text: #ECEDF3;
+    --text-muted: #9296AC;
+    --accent: #F2B705;
+    --accent-soft: rgba(242,183,5,0.14);
+    --violet: #8B72FF;
+    --line: rgba(236,237,243,0.13);
+  }
+  html.light-mode{
+    --bg: #F3F4F8;
+    --bg-alt: #E7E9F1;
+    --surface: #FFFFFF;
+    --text: #0B0D14;
+    --text-muted: #5A5D72;
+    --accent: #B4790A;
+    --accent-soft: rgba(180,121,10,0.12);
+    --violet: #5B3FD9;
+    --line: rgba(11,13,20,0.12);
+  }
+
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color .3s ease, color .3s ease;
+  }
+
+  ::selection{ background: var(--accent); color: #06070D; }
+
+  .bg-surface{ background: var(--surface); }
+  .bg-alt{ background: var(--bg-alt); }
+  .border-hair{ border-color: var(--line); }
+  .divide-hair > * + *{ border-color: var(--line); }
+  .text-muted{ color: var(--text-muted); }
+  .text-accent{ color: var(--accent); }
+  .fill-accent{ fill: var(--accent); }
+  .stroke-accent{ stroke: var(--accent); }
+  .stroke-violet{ stroke: var(--violet); }
+  .stroke-line{ stroke: var(--line); }
+  .bg-accent-soft{ background: var(--accent-soft); }
+
+  .underline-hover{
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    transition: background-size .25s ease;
+  }
+  .underline-hover:hover{ background-size: 100% 1.5px; }
+
+  .btn-solid{ background: var(--accent); color: #0A0A0A; }
+  .btn-solid:hover{ filter: brightness(1.08); }
+  .btn-outline{ border: 1px solid var(--line); color: var(--text); }
+  .btn-outline:hover{ border-color: var(--accent); }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* Hero chirp waveform — single orchestrated draw-in */
+  .chirp-path{
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: draw 2.8s cubic-bezier(.22,.7,.3,1) forwards;
+  }
+  .chirp-grid{ opacity: 0; animation: fadeIn 1s ease forwards; animation-delay: .1s; }
+  .chirp-merger{ opacity: 0; animation: fadeIn .5s ease forwards; animation-delay: 2.5s; }
+  @keyframes draw{ to{ stroke-dashoffset: 0; } }
+  @keyframes fadeIn{ to{ opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .chirp-path{ animation: none; stroke-dashoffset: 0; }
+    .chirp-grid, .chirp-merger{ animation: none; opacity: 1; }
+  }
+
+  .accordion-body{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+  }
+  .accordion-body.open{ max-height: 3000px; }
+
+  .arxiv-tag{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .timeline-item{ position: relative; padding-left: 1.75rem; }
+  .timeline-item::before{
+    content: '';
+    position: absolute;
+    left: 0; top: 0.4rem;
+    width: 7px; height: 7px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+  .timeline-item::after{
+    content: '';
+    position: absolute;
+    left: 3px; top: 1rem;
+    bottom: -1.75rem;
+    width: 1px;
+    background: var(--line);
+  }
+  .timeline-item:last-child::after{ display: none; }
+</style>
+</head>
+
+<body class="font-sans antialiased">
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50 border-b border-hair backdrop-blur bg-bg/85">
+  <div class="max-w-6xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+    <a href="#top" class="font-display text-base font-semibold tracking-tight flex items-center gap-2">
+      <svg width="20" height="16" viewBox="0 0 40 24" aria-hidden="true">
+        <path d="M0 12 Q5 12 7 8 T13 16 T19 4 T25 20 T31 12 T40 12" fill="none" class="stroke-accent" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Lalit Pathak
+    </a>
+
+    <nav class="hidden md:flex items-center gap-7 text-sm">
+      <a href="#about" class="underline-hover pb-0.5">About</a>
+      <a href="#research" class="underline-hover pb-0.5">Research</a>
+      <a href="#publications" class="underline-hover pb-0.5">Publications</a>
+      <a href="#talks" class="underline-hover pb-0.5">Talks</a>
+      <a href="#teaching" class="underline-hover pb-0.5">Teaching</a>
+      <a href="#contact" class="underline-hover pb-0.5">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode"
+        class="w-9 h-9 grid place-items-center rounded-full border border-hair hover:border-accent transition-colors">
+        <svg id="icon-sun" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2.5v2.2M12 19.3v2.2M4.5 12H2.3M21.7 12h-2.2M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M18.2 5.8l-1.5 1.5M7.3 16.7l-1.5 1.5" stroke-linecap="round"/>
+        </svg>
+        <svg id="icon-moon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"
+        class="md:hidden w-9 h-9 grid place-items-center rounded-full border border-hair">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden border-t border-hair bg-bg">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4 text-base">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#talks">Talks</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="relative pt-32 pb-20 md:pt-44 md:pb-28 px-6 md:px-10 overflow-hidden">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
+
+    <div class="md:col-span-7">
+      <p class="text-sm text-muted mb-4">Postdoctoral Fellow · IUCAA, Pune</p>
+      <h1 class="font-display font-medium leading-[1.08] text-[2.5rem] sm:text-5xl md:text-6xl">
+        Turning detector noise into gravitational-wave astrophysics.
+      </h1>
+      <p class="mt-7 text-lg text-muted max-w-lg leading-relaxed">
+        I'm Lalit Pathak. I build the statistical and computational methods used to find, characterize,
+        and interpret gravitational-wave signals from compact binary mergers — from rapid parameter
+        estimation to tests of general relativity.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-5">
+        <a href="#publications" class="btn-solid px-6 py-3 rounded-full text-sm font-medium transition-colors">Read the research</a>
+        <a href="Lalit_Pathak_Academic_CV.pdf" class="btn-outline px-6 py-3 rounded-full text-sm font-medium transition-colors">Download CV</a>
+      </div>
+    </div>
+
+    <div class="md:col-span-5">
+      <svg viewBox="0 0 420 260" class="w-full h-auto max-w-md mx-auto" aria-hidden="true">
+        <g class="chirp-grid stroke-line" stroke-width="1">
+          <line x1="0" y1="60" x2="420" y2="60"/>
+          <line x1="0" y1="130" x2="420" y2="130"/>
+          <line x1="0" y1="200" x2="420" y2="200"/>
+        </g>
+        <path class="chirp-path stroke-accent" fill="none" stroke-width="2" stroke-linecap="round"
+          d="M0 130
+             C 20 128, 40 132, 60 130
+             C 80 128, 95 133, 110 127
+             C 122 122, 132 138, 144 122
+             C 154 108, 164 150, 176 106
+             C 186 92, 196 166, 210 92
+             C 220 76, 232 182, 246 78
+             C 258 60, 270 198, 284 66
+             C 292 56, 300 96, 306 130
+             C 312 158, 320 108, 328 130
+             C 336 148, 344 116, 352 130
+             C 362 142, 372 122, 384 130
+             C 394 136, 406 126, 420 130"/>
+        <circle class="chirp-merger fill-accent" cx="284" cy="66" r="4"/>
+        <text x="292" y="52" class="chirp-merger arxiv-tag" fill="var(--text-muted)">merger</text>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
+
+    <div class="md:col-span-7">
+      <h2 class="font-display text-3xl md:text-4xl mb-6">About</h2>
+      <div class="space-y-5 text-[1.05rem] leading-relaxed text-muted max-w-xl">
+        <p>
+          My research focuses on extracting astrophysical and fundamental-physics information from
+          gravitational-wave observations. I develop and apply computational and statistical methods for
+          gravitational-wave data analysis, with particular interests in compact-binary parameter
+          estimation, waveform modelling, population inference, gravitational-wave cosmology, and tests of
+          general relativity.
+        </p>
+        <p>
+          I completed my Ph.D. in Physics at IIT Gandhinagar in 2024, working on fast parameter-estimation
+          frameworks for compact binaries. I'm currently a postdoctoral fellow at IUCAA, Pune, where I lead
+          the PyCBC-based subsolar-mass search for LIGO–Virgo–KAGRA's fourth observing run and work on
+          gravitational-wave lensing, population inference, and machine-learning methods for the stochastic
+          gravitational-wave background.
+        </p>
+      </div>
+    </div>
+
+    <div class="md:col-span-5">
+      <h3 class="text-sm text-muted mb-6">Positions &amp; education</h3>
+      <div class="space-y-7">
+        <div class="timeline-item">
+          <p class="font-medium">Postdoctoral Fellow</p>
+          <p class="text-sm text-muted">IUCAA, Pune · Aug 2025 – Present</p>
+        </div>
+        <div class="timeline-item">
+          <p class="font-medium">Postdoctoral Fellow</p>
+          <p class="text-sm text-muted">Dept. of Astronomy &amp; Astrophysics, TIFR, Mumbai · Jul 2024 – Jul 2025</p>
+        </div>
+        <div class="timeline-item">
+          <p class="font-medium">Visiting Research Assistant</p>
+          <p class="text-sm text-muted">Dept. of Astronomy &amp; Astrophysics, TIFR, Mumbai · Feb 2024 – Jul 2024</p>
+        </div>
+        <div class="timeline-item">
+          <p class="font-medium">Ph.D., Physics</p>
+          <p class="text-sm text-muted">IIT Gandhinagar · 2018 – 2024</p>
+        </div>
+        <div class="timeline-item">
+          <p class="font-medium">M.Sc., Physics</p>
+          <p class="text-sm text-muted">University of Delhi · 2017</p>
+        </div>
+        <div class="timeline-item">
+          <p class="font-medium">B.Sc. (Hons.), Physics</p>
+          <p class="text-sm text-muted">Hansraj College, University of Delhi · 2013</p>
+        </div>
+      </div>
+      <p class="text-sm text-muted mt-8">
+        <span class="text-accent">Award</span> — TCS Research Scholarship (2019), for Ph.D. research at IIT Gandhinagar.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ RESEARCH INTERESTS ============ -->
+<section id="research" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-display text-3xl md:text-4xl mb-12">Research interests</h2>
+    <dl class="grid sm:grid-cols-2 gap-x-10 gap-y-10">
+      <div class="border-t border-hair pt-5">
+        <dt class="font-display text-lg mb-2">Parameter estimation</dt>
+        <dd class="text-muted leading-relaxed">
+          Fast, faithful inference of compact-binary source properties from gravitational-wave strain,
+          using meshfree approximation and numerical linear algebra to make posteriors tractable at scale.
+        </dd>
+      </div>
+      <div class="border-t border-hair pt-5">
+        <dt class="font-display text-lg mb-2">Gravitational-wave searches</dt>
+        <dd class="text-muted leading-relaxed">
+          Search pipelines for compact-binary signals, including a PyCBC-based subsolar-mass search and
+          low-latency detection with PyCBC Live on IUCAA's search infrastructure.
+        </dd>
+      </div>
+      <div class="border-t border-hair pt-5">
+        <dt class="font-display text-lg mb-2">Astrophysics &amp; cosmology with GW data</dt>
+        <dd class="text-muted leading-relaxed">
+          Population and redshift-distribution inference for binary black holes, and spectral-siren
+          measurements of the Hubble constant.
+        </dd>
+      </div>
+      <div class="border-t border-hair pt-5">
+        <dt class="font-display text-lg mb-2">Tests of general relativity</dt>
+        <dd class="text-muted leading-relaxed">
+          Using gravitational-wave observations to probe deviations from GR, including constraints on the
+          speed and propagation of gravitational waves.
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ PUBLICATIONS ============ -->
+<section id="publications" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-display text-3xl md:text-4xl mb-3">Publications</h2>
+    <p class="text-muted mb-12 max-w-xl">
+      Full and current listings are on my
+      <a href="https://inspirehep.net/authors/2964265?ui-citation-summary=true" class="underline-hover pb-0.5">INSPIRE-HEP</a>
+      and <a href="https://scholar.google.com/citations?user=KhVSSlMAAAAJ&hl=en" class="underline-hover pb-0.5">Google Scholar</a> profiles.
+    </p>
+
+    <!-- Selected research publications -->
+    <h3 class="font-display text-xl mb-6">Selected research publications</h3>
+    <ol class="divide-y divide-hair border-t border-b border-hair mb-16">
+
+      <li class="py-6">
+        <p class="leading-snug"><strong>L. Pathak</strong>, H. Phurailatpam, and A. Gopakumar</p>
+        <p class="mt-1 leading-snug">On the Presence of a Tertiary Compact Object in GW190814</p>
+        <p class="text-sm text-muted mt-2">Accepted in <em>ApJ</em> (2026)
+          <a href="https://arxiv.org/abs/2605.21955" class="arxiv-tag underline-hover ml-2">arXiv:2605.21955</a>
+        </p>
+      </li>
+
+      <li class="py-6">
+        <p class="leading-snug">A. Sharma, <strong>L. Pathak</strong>, S. Roy, and A. S. Sengupta</p>
+        <p class="mt-1 leading-snug">Rapid parameter estimation with the full symphony of compact binary mergers using meshfree approximation</p>
+        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 114, 044043 (2026)
+          <a href="https://arxiv.org/abs/2508.04172" class="arxiv-tag underline-hover ml-2">arXiv:2508.04172</a>
+        </p>
+      </li>
+
+      <li class="py-6">
+        <p class="leading-snug">C. Karathanasis, S. Mukherjee, <strong>L. Pathak</strong>, S. Vallejo-Peña, M. R. Sah, B. Revenu, A. E. Romano, and J. Garcia-Bellido</p>
+        <p class="mt-1 leading-snug">Blinded Mock Data Challenge: Is the Spectral Siren Technique Robust for Measuring the Hubble Constant?</p>
+        <p class="text-sm text-muted mt-2">(2026)
+          <a href="https://arxiv.org/abs/2604.26273" class="arxiv-tag underline-hover ml-2">arXiv:2604.26273</a>
+        </p>
+      </li>
+
+      <li class="py-6">
+        <p class="leading-snug"><strong>L. Pathak</strong>, A. Reza, and A. S. Sengupta</p>
+        <p class="mt-1 leading-snug">Fast and faithful interpolation of numerical relativity surrogate waveforms using meshfree approximation</p>
+        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 110, 064022 (2024)</p>
+      </li>
+
+      <li class="py-6">
+        <p class="leading-snug">S. Shukla, <strong>L. Pathak</strong>, and A. Sengupta</p>
+        <p class="mt-1 leading-snug">Pinpointing Binary Neutron Star sources with a global network of GW Detectors, including LIGO-Aundha</p>
+        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 109, 044051 (2024)</p>
+      </li>
+
+      <li class="py-6">
+        <p class="leading-snug"><strong>L. Pathak</strong>, S. Munishwar, A. Reza, and A. S. Sengupta</p>
+        <p class="mt-1 leading-snug">Prompt sky localization of compact binary coalescences using meshfree approximation</p>
+        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 109, 024053 (2024)</p>
+      </li>
+
+      <li class="py-6">
+        <p class="leading-snug">R. Ghosh, S. Nair, <strong>L. Pathak</strong>, S. Sarkar, and A. S. Sengupta</p>
+        <p class="mt-1 leading-snug">Does the speed of gravitational waves depend on the source velocity?</p>
+        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 108, 124017 (2023)</p>
+      </li>
+
+      <li class="py-6">
+        <p class="leading-snug"><strong>L. Pathak</strong>, A. Reza, and A. S. Sengupta</p>
+        <p class="mt-1 leading-snug">Fast likelihood evaluation using meshfree approximations for reconstructing compact binary sources</p>
+        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 108, 064055 (2023)</p>
+      </li>
+
+    </ol>
+
+    <!-- LVK collaboration publications -->
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="font-display text-xl">LIGO–Virgo–KAGRA collaboration publications</h3>
+      <button id="lvk-toggle" type="button" aria-expanded="false" aria-controls="lvk-list"
+        class="text-sm underline-hover pb-0.5 whitespace-nowrap ml-4">Show all 14</button>
+    </div>
+
+    <ol id="lvk-list" class="accordion-body divide-y divide-hair border-t border-hair">
+
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">Updated Upper Limits on the Isotropic Gravitational-Wave Background from LIGO, Virgo, and KAGRA Data through April 2025</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2608.23477" class="arxiv-tag underline-hover">arXiv:2608.23477</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">Constraints on ultralight bosons from merging binary and remnant black holes observed during the second and third parts of the fourth LIGO-Virgo-KAGRA observing run</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2608.11620" class="arxiv-tag underline-hover">arXiv:2608.11620</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">L. Sun et al., LIGO Scientific, KAGRA, and Virgo Collaborations</p>
+        <p class="mt-1 leading-snug">LIGO A♯: Detector Design and Science Prospects Beyond A+</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2608.11673" class="arxiv-tag underline-hover">arXiv:2608.11673</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-5.0: Tests of General Relativity</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2607.19293" class="arxiv-tag underline-hover">arXiv:2607.19293</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">Open Data from LIGO, Virgo, and KAGRA through the Second Part of the Fourth Observing Run</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27090" class="arxiv-tag underline-hover">arXiv:2605.27090</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-5.0: Observations from the Second Part of the Fourth LIGO-Virgo-KAGRA Observing Run and Updates to the Gravitational-Wave Transient Catalog</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27225" class="arxiv-tag underline-hover">arXiv:2605.27225</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-5.0: Population Properties of Merging Compact Binaries</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27226" class="arxiv-tag underline-hover">arXiv:2605.27226</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-5.0: Constraints on the Cosmic Expansion Rate and Modified Gravitational-wave Propagation</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27227" class="arxiv-tag underline-hover">arXiv:2605.27227</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-5.0: Methods for Identifying and Characterizing Gravitational-wave Transients</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27224" class="arxiv-tag underline-hover">arXiv:2605.27224</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-5.0: An Introduction to Version 5.0 of the Gravitational-Wave Transient Catalog</p>
+        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27223" class="arxiv-tag underline-hover">arXiv:2605.27223</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-4.0: Updating the Gravitational-Wave Transient Catalog with Observations from the First Part of the Fourth LIGO-Virgo-KAGRA Observing Run</p>
+        <p class="text-sm text-muted mt-2">(2025) <a href="https://arxiv.org/abs/2508.18082" class="arxiv-tag underline-hover">arXiv:2508.18082</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-4.0: Population Properties of Merging Compact Binaries</p>
+        <p class="text-sm text-muted mt-2">(2025) <a href="https://arxiv.org/abs/2508.18083" class="arxiv-tag underline-hover">arXiv:2508.18083</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-4.0: Methods for Identifying and Characterizing Gravitational-wave Transients</p>
+        <p class="text-sm text-muted mt-2">(2025) <a href="https://arxiv.org/abs/2508.18081" class="arxiv-tag underline-hover">arXiv:2508.18081</a></p>
+      </li>
+      <li class="py-5">
+        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+        <p class="mt-1 leading-snug">GWTC-4.0: An Introduction to Version 4.0 of the Gravitational-Wave Transient Catalog</p>
+        <p class="text-sm text-muted mt-2"><em>Astrophys. J. Lett.</em> 995 (2025) 1, L18</p>
+      </li>
+
+    </ol>
+  </div>
+</section>
+
+<!-- ============ TALKS ============ -->
+<section id="talks" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
+
+    <div class="md:col-span-6">
+      <h2 class="font-display text-3xl md:text-4xl mb-8">Talks &amp; conference presentations</h2>
+      <ul class="space-y-6">
+        <li class="border-t border-hair pt-4">
+          <p class="leading-snug">Rapid construction of compact binary sources using meshfree approximation</p>
+          <p class="text-sm text-muted mt-1">Oral presentation, AAPCOS 2023, SINP, Kolkata</p>
+        </li>
+        <li class="border-t border-hair pt-4">
+          <p class="leading-snug">Rapid construction of compact binary sources using meshfree approximation</p>
+          <p class="text-sm text-muted mt-1">Poster, GWPAW 2022, Melbourne, Australia</p>
+        </li>
+        <li class="border-t border-hair pt-4">
+          <p class="leading-snug">Meshfree interpolation of likelihood for fast parameter estimation of CBCs</p>
+          <p class="text-sm text-muted mt-1">AAPS-DACG Workshop, 2021</p>
+        </li>
+        <li class="border-t border-hair pt-4 border-b pb-4">
+          <p class="leading-snug">Meshfree interpolation of likelihood for fast parameter estimation of CBCs</p>
+          <p class="text-sm text-muted mt-1">Poster (online), GWPAW 2021, Hannover, Germany</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="md:col-span-6">
+      <h3 class="font-display text-xl mb-8">Schools &amp; workshops</h3>
+      <ul class="space-y-6">
+        <li class="border-t border-hair pt-4">
+          <p class="leading-snug">GW Summer School 2023 — Numerical Relativity</p>
+          <p class="text-sm text-muted mt-1">ICTS, Bengaluru</p>
+        </li>
+        <li class="border-t border-hair pt-4">
+          <p class="leading-snug">GW Summer School 2022 — Astrophysics of GW sources, stellar structure and evolution, compact-binary evolutionary history</p>
+          <p class="text-sm text-muted mt-1">ICTS, Bengaluru</p>
+        </li>
+        <li class="border-t border-hair pt-4 border-b pb-4">
+          <p class="leading-snug">Newton–Bhabha Workshop on Gravitational Wave Astronomy</p>
+          <p class="text-sm text-muted mt-1">IUCAA, Pune (2019)</p>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TEACHING ============ -->
+<section id="teaching" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-display text-3xl md:text-4xl mb-5">Teaching &amp; outreach</h2>
+    <p class="text-muted max-w-xl leading-relaxed">
+      This section is being updated — check back soon for course, mentoring, and outreach details.
+    </p>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
+
+    <div class="md:col-span-6">
+      <h2 class="font-display text-3xl md:text-4xl mb-5">Get in touch</h2>
+      <p class="text-muted leading-relaxed max-w-sm">
+        For collaboration, questions about my work, or anything else — email is the best way to reach me.
+      </p>
+      <a href="mailto:lalit.pathak@iucaa.in" class="inline-block mt-6 text-lg font-medium underline-hover pb-0.5">
+        lalit.pathak@iucaa.in
+      </a>
+      <p class="text-sm text-muted mt-4">Inter-University Centre for Astronomy and Astrophysics (IUCAA), Pune, India</p>
+    </div>
+
+    <div class="md:col-span-6">
+      <h3 class="text-sm text-muted mb-5">Elsewhere</h3>
+      <ul class="divide-y divide-hair border-t border-b border-hair">
+        <li class="py-4 flex items-center justify-between">
+          <span>ORCID</span>
+          <a href="https://orcid.org/0000-0002-9523-7945" class="underline-hover pb-0.5">0000-0002-9523-7945</a>
+        </li>
+        <li class="py-4 flex items-center justify-between">
+          <span>INSPIRE-HEP</span>
+          <a href="https://inspirehep.net/authors/2964265?ui-citation-summary=true" class="underline-hover pb-0.5">Author profile</a>
+        </li>
+        <li class="py-4 flex items-center justify-between">
+          <span>Google Scholar</span>
+          <a href="https://scholar.google.com/citations?user=KhVSSlMAAAAJ&hl=en" class="underline-hover pb-0.5">Citations</a>
+        </li>
+        <li class="py-4 flex items-center justify-between">
+          <span>GitHub</span>
+          <a href="https://github.com/lalit-pathak" class="underline-hover pb-0.5">lalit-pathak</a>
+        </li>
+        <li class="py-4 flex items-center justify-between">
+          <span>Curriculum Vitae</span>
+          <a href="Lalit_Pathak_Academic_CV.pdf" class="underline-hover pb-0.5">Download PDF</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="px-6 md:px-10 py-10 border-t border-hair">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted">
+    <p>© 2026 Lalit Pathak.</p>
+    <a href="#top" class="underline-hover pb-0.5">Back to top</a>
+  </div>
+</footer>
+
+<script>
+  // ---------- Theme toggle (defaults to dark, respects system light preference) ----------
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('theme-toggle');
+  const iconSun = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+
+  function applyTheme(isLight){
+    root.classList.toggle('light-mode', isLight);
+    themeToggle.setAttribute('aria-pressed', String(isLight));
+    themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    iconSun.classList.toggle('hidden', !isLight);
+    iconMoon.classList.toggle('hidden', isLight);
+  }
+
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  applyTheme(prefersLight);
+
+  themeToggle.addEventListener('click', () => {
+    applyTheme(!root.classList.contains('light-mode'));
+  });
+
+  // ---------- Mobile menu ----------
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuToggle.addEventListener('click', () => {
+    const willOpen = mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    menuToggle.setAttribute('aria-expanded', String(willOpen));
+  });
+
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ---------- LVK publications accordion ----------
+  const lvkToggle = document.getElementById('lvk-toggle');
+  const lvkList = document.getElementById('lvk-list');
+
+  lvkToggle.addEventListener('click', () => {
+    const isOpen = lvkList.classList.toggle('open');
+    lvkToggle.setAttribute('aria-expanded', String(isOpen));
+    lvkToggle.textContent = isOpen ? 'Show fewer' : 'Show all 14';
+  });
+</script>
+
+</body>
+</html>
