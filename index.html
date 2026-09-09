@@ -51,6 +51,7 @@
 
   html{ scroll-behavior: smooth; }
   body{
+    position: relative;
     background: var(--bg);
     color: var(--text);
     transition: background-color .3s ease, color .3s ease;
@@ -175,6 +176,9 @@
   html:not(.light-mode) .merger-motif{ color: rgba(236,237,243,.95); opacity: .15; }
   html.light-mode .merger-motif{ color: rgba(11,13,20,.75); opacity: .075; }
 
+  html:not(.light-mode) .merger-motif{ opacity:.16; color:rgba(236,237,243,.95); }
+  html.light-mode .merger-motif{ opacity:.09; color:rgba(11,13,20,.8); }
+
   .merger-motif:nth-child(even){
     animation-direction: reverse;
   }
@@ -189,6 +193,30 @@
   header, main, footer{
     position: relative;
     z-index: 1;
+  }
+
+  main{
+    position: relative;
+  }
+
+  /* Each content section is its own canvas for the local merger motifs. */
+  main > section{
+    position: relative;
+    isolation: isolate;
+  }
+
+  main > section > .merger-motif{
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  main > section > *:not(.merger-motif){
+    position: relative;
+    z-index: 1;
+  }
+
+  main > section > .merger-motif{
+    display: block;
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -249,7 +277,27 @@
       <circle class="body" cx="116" cy="105" r="5.5"/>
       <path class="wave" d="M135 99c12-5 17 7 28 2s13-10 24-4"/>
     </svg>
+  
+  <div class="merger-motif" style="left:31%; top:45%; width:115px; height:115px; --drift:83s;">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="39" ry="17" transform="rotate(22 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="56" ry="24" transform="rotate(22 100 100)"/>
+      <circle class="body" cx="82" cy="95" r="8"/>
+      <circle class="body" cx="119" cy="105" r="2.5"/>
+      <path class="wave" d="M130 92c10 6 17-6 28 0s16 8 27 1"/>
+    </svg>
   </div>
+  <div class="merger-motif" style="left:57%; top:92%; width:190px; height:190px; --drift:127s;">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="49" ry="21" transform="rotate(-48 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="67" ry="29" transform="rotate(-48 100 100)"/>
+      <circle class="body" cx="82" cy="108" r="9"/>
+      <circle class="body" cx="116" cy="91" r="3"/>
+      <path class="wave" d="M121 151c11-6 17 6 28 0s17-8 27-2"/>
+    </svg>
+  </div>
+
+</div>
 
   <div class="merger-motif" style="left:78%; top:5%; width:210px; height:210px; --drift:125s;">
     <svg viewBox="0 0 200 200">
@@ -480,6 +528,47 @@
 
 <!-- ============ RESEARCH INTERESTS ============ -->
 <section id="research" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+
+  <div class="merger-motif" style="position:absolute; left:4%; top:18%; width:170px; height:170px; --drift:105s; transform:rotate(-25deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="47" ry="20" transform="rotate(-25 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="64" ry="28" transform="rotate(-25 100 100)"/>
+      <circle class="body" cx="81" cy="94" r="7"/>
+      <circle class="body" cx="116" cy="105" r="3.5"/>
+      <path class="wave" d="M135 99c12-5 17 7 28 2s13-10 24-4"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:68%; top:10%; width:135px; height:135px; --drift:108s; transform:rotate(58deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="43" ry="18" transform="rotate(58 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="60" ry="26" transform="rotate(58 100 100)"/>
+      <circle class="body" cx="94" cy="79" r="5"/>
+      <circle class="body" cx="107" cy="119" r="3"/>
+      <path class="wave" d="M31 80c11 6 17-6 28 0s16 8 27 1"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:82%; top:66%; width:205px; height:205px; --drift:108s; transform:rotate(32deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="24" transform="rotate(32 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="32" transform="rotate(32 100 100)"/>
+      <circle class="body" cx="80" cy="107" r="7"/>
+      <circle class="body" cx="117" cy="91" r="3.5"/>
+      <path class="wave" d="M35 76c12 7 18-7 29 0s17 8 27 1"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:24%; top:70%; width:125px; height:125px; --drift:108s; transform:rotate(-62deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="41" ry="17" transform="rotate(-62 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="58" ry="25" transform="rotate(-62 100 100)"/>
+      <circle class="body" cx="94" cy="81" r="5"/>
+      <circle class="body" cx="108" cy="116" r="3"/>
+      <path class="wave" d="M123 150c11-6 17 6 28 0s17-8 27-2"/>
+    </svg>
+  </div>
+
   <div class="max-w-6xl mx-auto">
     <h2 class="font-display text-3xl md:text-4xl mb-12">Research interests</h2>
     <dl class="grid sm:grid-cols-2 gap-x-10 gap-y-10">
@@ -671,6 +760,47 @@
 
 <!-- ============ TALKS ============ -->
 <section id="talks" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+
+  <div class="merger-motif" style="position:absolute; left:2%; top:16%; width:155px; height:155px; --drift:105s; transform:rotate(42deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="46" ry="20" transform="rotate(42 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="63" ry="28" transform="rotate(42 100 100)"/>
+      <circle class="body" cx="82" cy="108" r="7"/>
+      <circle class="body" cx="116" cy="91" r="3.5"/>
+      <path class="wave" d="M128 108c11-6 18 7 29 1s16-8 27-2"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:75%; top:8%; width:120px; height:120px; --drift:105s; transform:rotate(-18deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="40" ry="17" transform="rotate(-18 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="57" ry="25" transform="rotate(-18 100 100)"/>
+      <circle class="body" cx="95" cy="81" r="5"/>
+      <circle class="body" cx="107" cy="118" r="3"/>
+      <path class="wave" d="M32 106c10 5 17-7 28-1s17 8 28 2"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:61%; top:58%; width:215px; height:215px; --drift:108s; transform:rotate(-38deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="23" transform="rotate(-38 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="31" transform="rotate(-38 100 100)"/>
+      <circle class="body" cx="80" cy="93" r="7"/>
+      <circle class="body" cx="118" cy="106" r="3.5"/>
+      <path class="wave" d="M27 82c12 7 18-6 29 0s17 8 28 1"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:19%; top:71%; width:145px; height:145px; --drift:108s; transform:rotate(70deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="44" ry="19" transform="rotate(70 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="61" ry="27" transform="rotate(70 100 100)"/>
+      <circle class="body" cx="95" cy="79" r="5"/>
+      <circle class="body" cx="106" cy="119" r="3"/>
+      <path class="wave" d="M112 45c10-6 17 6 27 1s16-7 26 0"/>
+    </svg>
+  </div>
+
   <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
 
     <div class="md:col-span-6">
@@ -728,6 +858,47 @@
 
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+
+  <div class="merger-motif" style="position:absolute; left:5%; top:12%; width:180px; height:180px; --drift:105s; transform:rotate(-35deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="48" ry="21" transform="rotate(-35 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="65" ry="29" transform="rotate(-35 100 100)"/>
+      <circle class="body" cx="80" cy="94" r="7"/>
+      <circle class="body" cx="116" cy="105" r="3.5"/>
+      <path class="wave" d="M130 99c10-5 17 6 27 1s16-8 26-3"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:72%; top:7%; width:130px; height:130px; --drift:105s; transform:rotate(82deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="42" ry="18" transform="rotate(82 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="59" ry="26" transform="rotate(82 100 100)"/>
+      <circle class="body" cx="96" cy="79" r="5"/>
+      <circle class="body" cx="104" cy="119" r="3"/>
+      <path class="wave" d="M116 50c11-6 17 7 28 1s17-8 28-1"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:78%; top:56%; width:220px; height:220px; --drift:108s; transform:rotate(18deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="23" transform="rotate(18 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="31" transform="rotate(18 100 100)"/>
+      <circle class="body" cx="81" cy="95" r="7"/>
+      <circle class="body" cx="119" cy="104" r="3.5"/>
+      <path class="wave" d="M130 93c11 7 18-6 28 0s16 9 27 2"/>
+    </svg>
+  </div>
+
+  <div class="merger-motif" style="position:absolute; left:28%; top:67%; width:150px; height:150px; --drift:108s; transform:rotate(-70deg);">
+    <svg viewBox="0 0 200 200">
+      <ellipse class="orbit" cx="100" cy="100" rx="43" ry="18" transform="rotate(-70 100 100)"/>
+      <ellipse class="trajectory" cx="100" cy="100" rx="60" ry="26" transform="rotate(-70 100 100)"/>
+      <circle class="body" cx="94" cy="80" r="5"/>
+      <circle class="body" cx="107" cy="118" r="3"/>
+      <path class="wave" d="M40 94c10 6 17-6 28 0s17 8 28 1"/>
+    </svg>
+  </div>
+
   <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
 
     <div class="md:col-span-6">
