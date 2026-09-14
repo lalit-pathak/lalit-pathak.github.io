@@ -1,15 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Lalit Pathak — Gravitational-Wave Astrophysics</title>
-<meta name="description" content="Lalit Pathak, Postdoctoral Fellow at IUCAA, Pune — gravitational-wave data analysis, compact-binary astrophysics, and tests of general relativity.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<meta content="Lalit Pathak, Postdoctoral Fellow at IUCAA, Pune — gravitational-wave data analysis, compact-binary astrophysics, and tests of general relativity." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -24,7 +23,6 @@
     },
   };
 </script>
-
 <style>
   :root{
     --bg: #06070D;
@@ -38,9 +36,9 @@
     --line: rgba(236,237,243,0.13);
   }
   html.light-mode{
-    --bg: #F3F4F8;
-    --bg-alt: #E7E9F1;
-    --surface: #FFFFFF;
+    --bg: #F5F3EE;
+    --bg-alt: #ECEAE3;
+    --surface: #FFFDF8;
     --text: #0B0D14;
     --text-muted: #5A5D72;
     --accent: #B4790A;
@@ -257,36 +255,63 @@
   }
 
   .merger-motif .orbit,
-  .merger-motif .trajectory{
+  .merger-motif .trajectory,
+  .merger-motif .body-ring,
+  .merger-motif .inspiral{
     fill: none;
     stroke: currentColor;
-    stroke-width: 1;
+    stroke-width: 1.15;
     vector-effect: non-scaling-stroke;
   }
 
-  .merger-motif .orbit{ opacity: .65; }
+  .merger-motif .orbit-outer{ opacity: .38; }
+  .merger-motif .orbit-mid{ opacity: .48; }
+  .merger-motif .orbit-inner{ opacity: .58; }
+
   .merger-motif .trajectory{
-    stroke-dasharray: 2 5;
-    opacity: .8;
+    stroke-width: .95;
+    opacity: .34;
   }
+
+  .merger-motif .inspiral{
+    stroke-width: 1.1;
+    opacity: .46;
+  }
+
+  .merger-motif .body-ring{
+    stroke-width: 1.15;
+    opacity: .45;
+  }
+
+  .merger-motif .small-ring{ opacity: .38; }
 
   .merger-motif .body{
     fill: currentColor;
-    opacity: .9;
+    opacity: .82;
   }
 
-  .merger-motif .wave{
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 1;
-    opacity: .55;
+  .merger-motif .body-secondary{
+    opacity: .62;
   }
 
-  html:not(.light-mode) .merger-motif{ color: rgba(236,237,243,.95); opacity: .15; }
-  html.light-mode .merger-motif{ color: rgba(11,13,20,.75); opacity: .075; }
+  html:not(.light-mode) .merger-motif{
+    color: rgba(236,237,243,.95);
+    opacity: .14;
+  }
 
-  html:not(.light-mode) .merger-motif{ opacity:.16; color:rgba(236,237,243,.95); }
-  html.light-mode .merger-motif{ opacity:.09; color:rgba(11,13,20,.8); }
+  html.light-mode .merger-motif{
+    color: rgba(55,76,88,.82);
+    opacity: .135;
+  }
+
+  html.light-mode .merger-motif .orbit-outer{ opacity: .42; }
+  html.light-mode .merger-motif .orbit-mid{ opacity: .54; }
+  html.light-mode .merger-motif .orbit-inner{ opacity: .66; }
+  html.light-mode .merger-motif .trajectory{ opacity: .40; }
+  html.light-mode .merger-motif .inspiral{ opacity: .52; }
+  html.light-mode .merger-motif .body-ring{ opacity: .52; }
+  html.light-mode .merger-motif .body{ opacity: .70; }
+  html.light-mode .merger-motif .body-secondary{ opacity: .56; }
 
   .merger-motif:nth-child(even){
     animation-direction: reverse;
@@ -316,12 +341,6 @@
      section, just like a continuous background field. */
   main > section{
     position: relative;
-  }
-
-  main > section > .merger-motif{
-    z-index: 1;
-    pointer-events: none;
-    display: block;
   }
 
   main > section > *:not(.merger-motif){
@@ -373,1193 +392,880 @@
     background: var(--line);
   }
   .timeline-item:last-child::after{ display: none; }
+  /* Continuous global merger field for the sections that previously had local motifs. */
+  #research, #lvk, #talks, #contact { background: transparent !important; }
+
 </style>
 </head>
-
 <body class="font-sans antialiased">
 <!-- ============ BACKGROUND COMPACT-BINARY MERGER FIELD ============ -->
-<div class="merger-field" aria-hidden="true">
+<div aria-hidden="true" class="merger-field">
+<div class="merger-motif" style="left:-5%; top:8%; width:250px; height:250px; --drift:118s; --rotation:-16deg;">
+  <svg viewBox="0 0 200 200" aria-hidden="true">
+    <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-inner" cx="100" cy="108" rx="46" ry="23" transform="rotate(-17 100 108)"></ellipse>
 
-  <div class="merger-motif" style="left:2%; top:8%; --drift:105s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="47" ry="20" transform="rotate(-25 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="63" ry="28" transform="rotate(-25 100 100)"/>
-      <circle class="body" cx="81" cy="94" r="8"/>
-      <circle class="body" cx="116" cy="105" r="5.5"/>
-      <path class="wave" d="M135 99c12-5 17 7 28 2s13-10 24-4"/>
-    </svg>
-  </div>
+    <path class="trajectory" d="M18 105
+      C30 53, 72 29, 119 38
+      C163 46, 184 78, 174 111
+      C163 147, 119 169, 75 157
+      C37 147, 17 128, 18 105"></path>
 
-  <div class="merger-motif" style="left:31%; top:45%; width:115px; height:115px; --drift:83s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="39" ry="17" transform="rotate(22 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="56" ry="24" transform="rotate(22 100 100)"/>
-      <circle class="body" cx="82" cy="95" r="8"/>
-      <circle class="body" cx="119" cy="105" r="2.5"/>
-      <path class="wave" d="M130 92c10 6 17-6 28 0s16 8 27 1"/>
-    </svg>
-  </div>
-  <div class="merger-motif" style="left:57%; top:92%; width:190px; height:190px; --drift:127s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="49" ry="21" transform="rotate(-48 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="67" ry="29" transform="rotate(-48 100 100)"/>
-      <circle class="body" cx="82" cy="108" r="9"/>
-      <circle class="body" cx="116" cy="91" r="3"/>
-      <path class="wave" d="M121 151c11-6 17 6 28 0s17-8 27-2"/>
-    </svg>
-  </div>
+    <path class="trajectory" d="M42 113
+      C48 76, 76 55, 108 59
+      C139 63, 157 86, 151 112
+      C145 138, 116 151, 88 143
+      C60 136, 45 126, 42 113"></path>
 
-  <div class="merger-motif" style="left:78%; top:5%; width:210px; height:210px; --drift:125s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="24" transform="rotate(32 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="70" ry="31" transform="rotate(32 100 100)"/>
-      <circle class="body" cx="81" cy="107" r="7"/>
-      <circle class="body" cx="117" cy="91" r="9"/>
-      <path class="wave" d="M35 76c12 7 18-7 29 0s17 8 27 1"/>
-    </svg>
-  </div>
+    <ellipse class="body-ring" cx="76" cy="104" rx="12.0" ry="12.0"></ellipse>
+    <ellipse class="body-ring small-ring" cx="124" cy="104" rx="11.0" ry="11.0"></ellipse>
 
-  <div class="merger-motif" style="left:22%; top:31%; width:135px; height:135px; --drift:88s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="43" ry="18" transform="rotate(70 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="59" ry="25" transform="rotate(70 100 100)"/>
-      <circle class="body" cx="95" cy="78" r="5"/>
-      <circle class="body" cx="106" cy="118" r="7"/>
-      <path class="wave" d="M112 45c10-6 17 6 27 1s16-7 26 0"/>
-    </svg>
-  </div>
+    <circle class="body body-primary" cx="76" cy="104" r="7.0"></circle>
+    <circle class="body body-secondary" cx="124" cy="104" r="7.0"></circle>
 
-  <div class="merger-motif" style="left:67%; top:29%; width:145px; height:145px; --drift:115s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="45" ry="19" transform="rotate(-55 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="62" ry="27" transform="rotate(-55 100 100)"/>
-      <circle class="body" cx="82" cy="110" r="6"/>
-      <circle class="body" cx="113" cy="91" r="5"/>
-      <path class="wave" d="M29 128c12-7 17 6 29 0s16-9 28-2"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="left:-2%; top:52%; width:220px; height:220px; --drift:135s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="50" ry="22" transform="rotate(18 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="72" ry="32" transform="rotate(18 100 100)"/>
-      <circle class="body" cx="82" cy="95" r="9"/>
-      <circle class="body" cx="119" cy="104" r="6"/>
-      <path class="wave" d="M130 93c11 7 18-6 28 0s16 9 27 2"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="left:84%; top:48%; width:180px; height:180px; --drift:100s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="46" ry="20" transform="rotate(-18 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="65" ry="28" transform="rotate(-18 100 100)"/>
-      <circle class="body" cx="79" cy="99" r="6"/>
-      <circle class="body" cx="118" cy="101" r="8"/>
-      <path class="wave" d="M37 107c11 5 17-7 28-1s17 9 28 2"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="left:12%; top:73%; width:155px; height:155px; --drift:118s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="47" ry="20" transform="rotate(43 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="66" ry="28" transform="rotate(43 100 100)"/>
-      <circle class="body" cx="83" cy="108" r="7"/>
-      <circle class="body" cx="116" cy="91" r="5"/>
-      <path class="wave" d="M121 151c11-6 17 6 28 0s17-8 27-2"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="left:58%; top:69%; width:230px; height:230px; --drift:145s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="23" transform="rotate(-38 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="74" ry="32" transform="rotate(-38 100 100)"/>
-      <circle class="body" cx="80" cy="93" r="9"/>
-      <circle class="body" cx="118" cy="106" r="6"/>
-      <path class="wave" d="M27 82c12 7 18-6 29 0s17 8 28 1"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="left:35%; top:88%; width:125px; height:125px; --drift:92s;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="42" ry="18" transform="rotate(82 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="58" ry="25" transform="rotate(82 100 100)"/>
-      <circle class="body" cx="96" cy="79" r="5"/>
-      <circle class="body" cx="104" cy="119" r="6"/>
-      <path class="wave" d="M116 50c11-6 17 7 28 1s17-8 28-1"/>
-    </svg>
-  </div>
-
+    <path class="inspiral" d="M48 145
+      C63 156, 87 158, 108 148
+      C128 139, 136 121, 131 104
+      C126 87, 111 78, 96 80"></path>
+  </svg>
 </div>
+<div class="merger-motif" style="left:73%; top:4%; width:410px; height:410px; --drift:136s; --rotation:22deg;">
+  <svg viewBox="0 0 200 200" aria-hidden="true">
+    <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-inner" cx="100" cy="108" rx="46" ry="23" transform="rotate(-17 100 108)"></ellipse>
 
+    <path class="trajectory" d="M18 105
+      C30 53, 72 29, 119 38
+      C163 46, 184 78, 174 111
+      C163 147, 119 169, 75 157
+      C37 147, 17 128, 18 105"></path>
 
+    <path class="trajectory" d="M42 113
+      C48 76, 76 55, 108 59
+      C139 63, 157 86, 151 112
+      C145 138, 116 151, 88 143
+      C60 136, 45 126, 42 113"></path>
+
+    <ellipse class="body-ring" cx="72" cy="106" rx="18.0" ry="18.0"></ellipse>
+    <ellipse class="body-ring small-ring" cx="126" cy="106" rx="17.0" ry="17.0"></ellipse>
+
+    <circle class="body body-primary" cx="72" cy="106" r="13.0"></circle>
+    <circle class="body body-secondary" cx="126" cy="106" r="13.0"></circle>
+
+    <path class="inspiral" d="M48 145
+      C63 156, 87 158, 108 148
+      C128 139, 136 121, 131 104
+      C126 87, 111 78, 96 80"></path>
+  </svg>
+</div>
+<div class="merger-motif" style="left:27%; top:29%; width:300px; height:300px; --drift:101s; --rotation:-24deg;">
+  <svg viewBox="0 0 200 200" aria-hidden="true">
+    <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-inner" cx="100" cy="108" rx="46" ry="23" transform="rotate(-17 100 108)"></ellipse>
+
+    <path class="trajectory" d="M18 105
+      C30 53, 72 29, 119 38
+      C163 46, 184 78, 174 111
+      C163 147, 119 169, 75 157
+      C37 147, 17 128, 18 105"></path>
+
+    <path class="trajectory" d="M42 113
+      C48 76, 76 55, 108 59
+      C139 63, 157 86, 151 112
+      C145 138, 116 151, 88 143
+      C60 136, 45 126, 42 113"></path>
+
+    <ellipse class="body-ring" cx="73" cy="105" rx="15.0" ry="15.0"></ellipse>
+    <ellipse class="body-ring small-ring" cx="123" cy="111" rx="9.8" ry="9.8"></ellipse>
+
+    <circle class="body body-primary" cx="73" cy="105" r="10.0"></circle>
+    <circle class="body body-secondary" cx="123" cy="111" r="5.8"></circle>
+
+    <path class="inspiral" d="M48 145
+      C63 156, 87 158, 108 148
+      C128 139, 136 121, 131 104
+      C126 87, 111 78, 96 80"></path>
+  </svg>
+</div>
+<div class="merger-motif" style="left:88%; top:43%; width:245px; height:245px; --drift:112s; --rotation:18deg;">
+  <svg viewBox="0 0 200 200" aria-hidden="true">
+    <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-inner" cx="100" cy="108" rx="46" ry="23" transform="rotate(-17 100 108)"></ellipse>
+
+    <path class="trajectory" d="M18 105
+      C30 53, 72 29, 119 38
+      C163 46, 184 78, 174 111
+      C163 147, 119 169, 75 157
+      C37 147, 17 128, 18 105"></path>
+
+    <path class="trajectory" d="M42 113
+      C48 76, 76 55, 108 59
+      C139 63, 157 86, 151 112
+      C145 138, 116 151, 88 143
+      C60 136, 45 126, 42 113"></path>
+
+    <ellipse class="body-ring" cx="77" cy="105" rx="11.5" ry="11.5"></ellipse>
+    <ellipse class="body-ring small-ring" cx="121" cy="105" rx="10.5" ry="10.5"></ellipse>
+
+    <circle class="body body-primary" cx="77" cy="105" r="6.5"></circle>
+    <circle class="body body-secondary" cx="121" cy="105" r="6.5"></circle>
+
+    <path class="inspiral" d="M48 145
+      C63 156, 87 158, 108 148
+      C128 139, 136 121, 131 104
+      C126 87, 111 78, 96 80"></path>
+  </svg>
+</div>
+<div class="merger-motif" style="left:3%; top:67%; width:400px; height:400px; --drift:129s; --rotation:28deg;">
+  <svg viewBox="0 0 200 200" aria-hidden="true">
+    <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-inner" cx="100" cy="108" rx="46" ry="23" transform="rotate(-17 100 108)"></ellipse>
+
+    <path class="trajectory" d="M18 105
+      C30 53, 72 29, 119 38
+      C163 46, 184 78, 174 111
+      C163 147, 119 169, 75 157
+      C37 147, 17 128, 18 105"></path>
+
+    <path class="trajectory" d="M42 113
+      C48 76, 76 55, 108 59
+      C139 63, 157 86, 151 112
+      C145 138, 116 151, 88 143
+      C60 136, 45 126, 42 113"></path>
+
+    <ellipse class="body-ring" cx="72" cy="106" rx="17.5" ry="17.5"></ellipse>
+    <ellipse class="body-ring small-ring" cx="128" cy="106" rx="16.5" ry="16.5"></ellipse>
+
+    <circle class="body body-primary" cx="72" cy="106" r="12.5"></circle>
+    <circle class="body body-secondary" cx="128" cy="106" r="12.5"></circle>
+
+    <path class="inspiral" d="M48 145
+      C63 156, 87 158, 108 148
+      C128 139, 136 121, 131 104
+      C126 87, 111 78, 96 80"></path>
+  </svg>
+</div>
+<div class="merger-motif" style="left:52%; top:78%; width:310px; height:310px; --drift:109s; --rotation:-14deg;">
+  <svg viewBox="0 0 200 200" aria-hidden="true">
+    <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
+    <ellipse class="orbit orbit-inner" cx="100" cy="108" rx="46" ry="23" transform="rotate(-17 100 108)"></ellipse>
+
+    <path class="trajectory" d="M18 105
+      C30 53, 72 29, 119 38
+      C163 46, 184 78, 174 111
+      C163 147, 119 169, 75 157
+      C37 147, 17 128, 18 105"></path>
+
+    <path class="trajectory" d="M42 113
+      C48 76, 76 55, 108 59
+      C139 63, 157 86, 151 112
+      C145 138, 116 151, 88 143
+      C60 136, 45 126, 42 113"></path>
+
+    <ellipse class="body-ring" cx="74" cy="104" rx="14.5" ry="14.5"></ellipse>
+    <ellipse class="body-ring small-ring" cx="124" cy="112" rx="8.8" ry="8.8"></ellipse>
+
+    <circle class="body body-primary" cx="74" cy="104" r="9.5"></circle>
+    <circle class="body body-secondary" cx="124" cy="112" r="4.8"></circle>
+
+    <path class="inspiral" d="M48 145
+      C63 156, 87 158, 108 148
+      C128 139, 136 121, 131 104
+      C126 87, 111 78, 96 80"></path>
+  </svg>
+</div>
+</div>
 <!-- ============ NAV ============ -->
 <header class="fixed top-0 inset-x-0 z-50 border-b border-hair backdrop-blur bg-bg/85">
-  <div class="max-w-6xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-    <a href="#top" class="font-display text-base font-semibold tracking-tight flex items-center gap-2 shrink-0">
-      <svg width="68" height="24" viewBox="0 0 150 48" aria-hidden="true"
-           class="shrink-0 overflow-visible">
-        <path d="M 4.00 24.00 Q 4.55 23.91 4.82 23.87 Q 5.10 23.82 5.37 23.78 Q 5.64 23.73 5.92 23.69 Q 6.19 23.64 6.47 23.60 Q 6.74 23.55 7.02 23.51 Q 7.29 23.46 7.56 23.41 Q 7.84 23.36 8.11 23.32 Q 8.39 23.27 8.66 23.22 Q 8.93 23.17 9.21 23.12 Q 9.48 23.07 9.76 23.02 Q 10.03 22.97 10.31 22.91 Q 10.58 22.86 10.85 22.81 Q 11.13 22.76 11.40 22.70 Q 11.68 22.65 11.95 22.60 Q 12.22 22.54 12.50 22.49 Q 12.77 22.43 13.05 22.38 Q 13.32 22.32 13.59 22.26 Q 13.87 22.21 14.14 22.15 Q 14.42 22.09 14.69 22.04 Q 14.97 21.98 15.24 21.93 Q 15.51 21.87 15.79 21.81 Q 16.06 21.76 16.34 21.70 Q 16.61 21.64 16.88 21.59 Q 17.16 21.53 17.43 21.48 Q 17.71 21.43 17.98 21.37 Q 18.25 21.32 18.53 21.27 Q 18.80 21.22 19.08 21.17 Q 19.35 21.12 19.63 21.08 Q 19.90 21.03 20.17 20.99 Q 20.45 20.94 20.72 20.90 Q 21.00 20.86 21.27 20.83 Q 21.54 20.79 21.82 20.76 Q 22.09 20.73 22.37 20.70 Q 22.64 20.68 22.92 20.66 Q 23.19 20.64 23.46 20.62 Q 23.74 20.61 24.01 20.60 Q 24.29 20.59 24.56 20.59 Q 24.83 20.59 25.11 20.60 Q 25.38 20.61 25.66 20.63 Q 25.93 20.64 26.20 20.67 Q 26.48 20.70 26.75 20.73 Q 27.03 20.77 27.30 20.82 Q 27.58 20.86 27.85 20.92 Q 28.12 20.98 28.40 21.05 Q 28.67 21.12 28.95 21.20 Q 29.22 21.28 29.49 21.38 Q 29.77 21.47 30.04 21.58 Q 30.32 21.69 30.59 21.81 Q 30.86 21.93 31.14 22.06 Q 31.41 22.19 31.69 22.34 Q 31.96 22.48 32.24 22.64 Q 32.51 22.80 32.78 22.97 Q 33.06 23.15 33.33 23.33 Q 33.61 23.51 33.88 23.71 Q 34.15 23.90 34.43 24.10 Q 34.70 24.31 34.98 24.52 Q 35.25 24.73 35.53 24.95 Q 35.80 25.17 36.07 25.40 Q 36.35 25.63 36.62 25.86 Q 36.90 26.09 37.17 26.32 Q 37.44 26.55 37.72 26.78 Q 37.99 27.01 38.27 27.23 Q 38.54 27.46 38.81 27.68 Q 39.09 27.89 39.36 28.10 Q 39.64 28.31 39.91 28.51 Q 40.19 28.70 40.46 28.88 Q 40.73 29.06 41.01 29.21 Q 41.28 29.37 41.56 29.50 Q 41.83 29.63 42.10 29.74 Q 42.38 29.84 42.65 29.91 Q 42.93 29.99 43.20 30.02 Q 43.47 30.06 43.75 30.06 Q 44.02 30.06 44.30 30.01 Q 44.57 29.97 44.85 29.88 Q 45.12 29.79 45.39 29.66 Q 45.67 29.53 45.94 29.35 Q 46.22 29.16 46.49 28.94 Q 46.76 28.71 47.04 28.43 Q 47.31 28.16 47.59 27.84 Q 47.86 27.51 48.14 27.15 Q 48.41 26.79 48.68 26.38 Q 48.96 25.98 49.23 25.54 Q 49.51 25.10 49.78 24.63 Q 50.05 24.17 50.33 23.68 Q 50.60 23.19 50.88 22.69 Q 51.15 22.18 51.42 21.68 Q 51.70 21.18 51.97 20.68 Q 52.25 20.18 52.52 19.70 Q 52.80 19.23 53.07 18.78 Q 53.34 18.33 53.62 17.93 Q 53.89 17.53 54.17 17.18 Q 54.44 16.84 54.71 16.56 Q 54.99 16.28 55.26 16.08 Q 55.54 15.89 55.81 15.78 Q 56.08 15.67 56.36 15.67 Q 56.63 15.66 56.91 15.76 Q 57.18 15.86 57.46 16.07 Q 57.73 16.28 58.00 16.60 Q 58.28 16.92 58.55 17.36 Q 58.83 17.79 59.10 18.33 Q 59.37 18.86 59.65 19.50 Q 59.92 20.13 60.20 20.84 Q 60.47 21.56 60.75 22.33 Q 61.02 23.11 61.29 23.93 Q 61.57 24.75 61.84 25.59 Q 62.12 26.43 62.39 27.26 Q 62.66 28.09 62.94 28.89 Q 63.21 29.68 63.49 30.40 Q 63.76 31.12 64.03 31.75 Q 64.31 32.37 64.58 32.87 Q 64.86 33.36 65.13 33.70 Q 65.41 34.04 65.68 34.20 Q 65.95 34.36 66.23 34.32 Q 66.50 34.29 66.78 34.05 Q 67.05 33.81 67.32 33.36 Q 67.60 32.91 67.87 32.26 Q 68.15 31.61 68.42 30.77 Q 68.69 29.94 68.97 28.95 Q 69.24 27.95 69.52 26.84 Q 69.79 25.72 70.07 24.53 Q 70.34 23.34 70.61 22.12 Q 70.89 20.90 71.16 19.72 Q 71.44 18.54 71.71 17.44 Q 71.98 16.35 72.26 15.42 Q 72.53 14.48 72.81 13.76 Q 73.08 13.03 73.36 12.57 Q 73.63 12.11 73.90 11.95 Q 74.18 11.79 74.45 11.96 Q 74.73 12.13 75.00 12.63 Q 75.27 13.13 75.55 13.96 Q 75.82 14.79 76.10 15.91 Q 76.37 17.03 76.64 18.40 Q 76.92 19.76 77.19 21.30 Q 77.47 22.83 77.74 24.45 Q 78.02 26.07 78.29 27.68 Q 78.56 29.28 78.84 30.77 Q 79.11 32.25 79.39 33.51 Q 79.66 34.77 79.93 35.71 Q 80.21 36.64 80.48 37.17 Q 80.76 37.70 81.03 37.77 Q 81.31 37.83 81.58 37.41 Q 81.85 36.98 82.13 36.07 Q 82.40 35.16 82.68 33.80 Q 82.95 32.45 83.22 30.73 Q 83.50 29.02 83.77 27.06 Q 84.05 25.10 84.32 23.04 Q 84.59 20.98 84.87 18.98 Q 85.14 16.98 85.42 15.21 Q 85.69 13.44 85.97 12.06 Q 86.24 10.68 86.51 9.83 Q 86.79 8.99 87.06 8.76 Q 87.34 8.54 87.61 9.00 Q 87.88 9.46 88.16 10.59 Q 88.43 11.72 88.71 13.44 Q 88.98 15.17 89.25 17.36 Q 89.53 19.55 89.80 22.01 Q 90.08 24.47 90.35 26.98 Q 90.63 29.49 90.90 31.79 Q 91.17 34.09 91.45 35.95 Q 91.72 37.81 92.00 39.01 Q 92.27 40.20 92.54 40.58 Q 92.82 40.96 93.09 40.45 Q 93.37 39.93 93.64 38.53 Q 93.92 37.14 94.19 34.98 Q 94.46 32.82 94.74 30.10 Q 95.01 27.39 95.29 24.41 Q 95.56 21.42 95.83 18.52 Q 96.11 15.61 96.38 13.12 Q 96.66 10.63 96.93 8.89 Q 97.20 7.15 97.48 6.40 Q 97.75 5.65 98.03 6.03 Q 98.30 6.41 98.58 7.92 Q 98.85 9.43 99.12 11.93 Q 99.40 14.42 99.67 17.61 Q 99.95 20.80 100.22 24.29 Q 100.49 27.77 100.77 31.09 Q 101.04 34.40 101.32 37.08 Q 101.59 39.75 101.86 41.38 Q 102.14 43.01 102.41 43.32 Q 102.69 43.63 102.96 42.51 Q 103.24 41.39 103.51 38.52 Q 103.78 35.65 104.06 33.60 Q 104.33 31.55 104.61 29.53 Q 104.88 27.51 105.15 25.66 Q 105.43 23.80 105.70 22.21 Q 105.98 20.61 106.25 19.35 Q 106.53 18.09 106.80 17.21 Q 107.07 16.32 107.35 15.82 Q 107.62 15.31 107.90 15.16 Q 108.17 15.02 108.44 15.20 Q 108.72 15.37 108.99 15.81 Q 109.27 16.25 109.54 16.89 Q 109.81 17.53 110.09 18.30 Q 110.36 19.06 110.64 19.89 Q 110.91 20.71 111.19 21.54 Q 111.46 22.36 111.73 23.12 Q 112.01 23.88 112.28 24.54 Q 112.56 25.20 112.83 25.73 Q 113.10 26.26 113.38 26.64 Q 113.65 27.02 113.93 27.25 Q 114.20 27.47 114.47 27.55 Q 114.75 27.63 115.02 27.57 Q 115.30 27.52 115.57 27.36 Q 115.85 27.19 116.12 26.94 Q 116.39 26.69 116.67 26.39 Q 116.94 26.09 117.22 25.75 Q 117.49 25.42 117.76 25.09 Q 118.04 24.76 118.31 24.44 Q 118.59 24.13 118.86 23.86 Q 119.14 23.58 119.41 23.36 Q 119.68 23.14 119.96 22.98 Q 120.23 22.82 120.51 22.72 Q 120.78 22.62 121.05 22.58 Q 121.33 22.54 121.60 22.55 Q 121.88 22.57 122.15 22.63 Q 122.42 22.69 122.70 22.78 Q 122.97 22.88 123.25 23.00 Q 123.52 23.12 123.80 23.25 Q 124.07 23.39 124.34 23.52 Q 124.62 23.66 124.89 23.79 Q 125.17 23.91 125.44 24.03 Q 125.71 24.14 125.99 24.23 Q 126.26 24.33 126.54 24.39 Q 126.81 24.46 127.08 24.51 Q 127.36 24.55 127.63 24.57 Q 127.91 24.59 128.18 24.59 Q 128.46 24.58 128.73 24.56 Q 129.00 24.54 129.28 24.50 Q 129.55 24.46 129.83 24.42 Q 130.10 24.37 130.37 24.32 Q 130.65 24.26 130.92 24.21 Q 131.20 24.15 131.47 24.10 Q 131.75 24.05 132.02 24.00 Q 132.29 23.96 132.57 23.92 Q 132.84 23.88 133.12 23.85 Q 133.39 23.82 133.66 23.80 Q 133.94 23.78 134.21 23.77 Q 134.49 23.76 134.76 23.76 Q 135.03 23.76 135.31 23.77 Q 135.58 23.78 135.86 23.79 Q 136.13 23.81 136.41 23.83 Q 136.68 23.84 136.95 23.87 Q 137.23 23.89 137.50 23.91 Q 137.78 23.93 138.05 23.95 Q 138.32 23.97 138.60 23.99 Q 138.87 24.01 139.15 24.03 Q 139.42 24.05 139.69 24.06 Q 139.97 24.07 140.24 24.08 Q 140.52 24.09 140.79 24.09 Q 141.07 24.10 141.34 24.10 Q 141.61 24.10 141.89 24.09 Q 142.16 24.09 142.44 24.09 Q 142.71 24.08 142.98 24.07 Q 143.26 24.06 143.53 24.06 Q 143.81 24.05 144.08 24.04 Q 144.36 24.03 144.63 24.02 Q 144.90 24.01 145.18 24.00 Q 145.45 24.00 145.73 23.99 Q 146.00 23.98 146.00 23.98"
-              fill="none" class="stroke-accent" stroke-width="3.1"
-              stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+<div class="max-w-6xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+<a class="font-display text-base font-semibold tracking-tight flex items-center gap-2 shrink-0" href="#top">
+<svg aria-hidden="true" class="shrink-0 overflow-visible" height="24" viewbox="0 0 150 48" width="68">
+<path class="stroke-accent" d="M 4.00 24.00 Q 4.55 23.91 4.82 23.87 Q 5.10 23.82 5.37 23.78 Q 5.64 23.73 5.92 23.69 Q 6.19 23.64 6.47 23.60 Q 6.74 23.55 7.02 23.51 Q 7.29 23.46 7.56 23.41 Q 7.84 23.36 8.11 23.32 Q 8.39 23.27 8.66 23.22 Q 8.93 23.17 9.21 23.12 Q 9.48 23.07 9.76 23.02 Q 10.03 22.97 10.31 22.91 Q 10.58 22.86 10.85 22.81 Q 11.13 22.76 11.40 22.70 Q 11.68 22.65 11.95 22.60 Q 12.22 22.54 12.50 22.49 Q 12.77 22.43 13.05 22.38 Q 13.32 22.32 13.59 22.26 Q 13.87 22.21 14.14 22.15 Q 14.42 22.09 14.69 22.04 Q 14.97 21.98 15.24 21.93 Q 15.51 21.87 15.79 21.81 Q 16.06 21.76 16.34 21.70 Q 16.61 21.64 16.88 21.59 Q 17.16 21.53 17.43 21.48 Q 17.71 21.43 17.98 21.37 Q 18.25 21.32 18.53 21.27 Q 18.80 21.22 19.08 21.17 Q 19.35 21.12 19.63 21.08 Q 19.90 21.03 20.17 20.99 Q 20.45 20.94 20.72 20.90 Q 21.00 20.86 21.27 20.83 Q 21.54 20.79 21.82 20.76 Q 22.09 20.73 22.37 20.70 Q 22.64 20.68 22.92 20.66 Q 23.19 20.64 23.46 20.62 Q 23.74 20.61 24.01 20.60 Q 24.29 20.59 24.56 20.59 Q 24.83 20.59 25.11 20.60 Q 25.38 20.61 25.66 20.63 Q 25.93 20.64 26.20 20.67 Q 26.48 20.70 26.75 20.73 Q 27.03 20.77 27.30 20.82 Q 27.58 20.86 27.85 20.92 Q 28.12 20.98 28.40 21.05 Q 28.67 21.12 28.95 21.20 Q 29.22 21.28 29.49 21.38 Q 29.77 21.47 30.04 21.58 Q 30.32 21.69 30.59 21.81 Q 30.86 21.93 31.14 22.06 Q 31.41 22.19 31.69 22.34 Q 31.96 22.48 32.24 22.64 Q 32.51 22.80 32.78 22.97 Q 33.06 23.15 33.33 23.33 Q 33.61 23.51 33.88 23.71 Q 34.15 23.90 34.43 24.10 Q 34.70 24.31 34.98 24.52 Q 35.25 24.73 35.53 24.95 Q 35.80 25.17 36.07 25.40 Q 36.35 25.63 36.62 25.86 Q 36.90 26.09 37.17 26.32 Q 37.44 26.55 37.72 26.78 Q 37.99 27.01 38.27 27.23 Q 38.54 27.46 38.81 27.68 Q 39.09 27.89 39.36 28.10 Q 39.64 28.31 39.91 28.51 Q 40.19 28.70 40.46 28.88 Q 40.73 29.06 41.01 29.21 Q 41.28 29.37 41.56 29.50 Q 41.83 29.63 42.10 29.74 Q 42.38 29.84 42.65 29.91 Q 42.93 29.99 43.20 30.02 Q 43.47 30.06 43.75 30.06 Q 44.02 30.06 44.30 30.01 Q 44.57 29.97 44.85 29.88 Q 45.12 29.79 45.39 29.66 Q 45.67 29.53 45.94 29.35 Q 46.22 29.16 46.49 28.94 Q 46.76 28.71 47.04 28.43 Q 47.31 28.16 47.59 27.84 Q 47.86 27.51 48.14 27.15 Q 48.41 26.79 48.68 26.38 Q 48.96 25.98 49.23 25.54 Q 49.51 25.10 49.78 24.63 Q 50.05 24.17 50.33 23.68 Q 50.60 23.19 50.88 22.69 Q 51.15 22.18 51.42 21.68 Q 51.70 21.18 51.97 20.68 Q 52.25 20.18 52.52 19.70 Q 52.80 19.23 53.07 18.78 Q 53.34 18.33 53.62 17.93 Q 53.89 17.53 54.17 17.18 Q 54.44 16.84 54.71 16.56 Q 54.99 16.28 55.26 16.08 Q 55.54 15.89 55.81 15.78 Q 56.08 15.67 56.36 15.67 Q 56.63 15.66 56.91 15.76 Q 57.18 15.86 57.46 16.07 Q 57.73 16.28 58.00 16.60 Q 58.28 16.92 58.55 17.36 Q 58.83 17.79 59.10 18.33 Q 59.37 18.86 59.65 19.50 Q 59.92 20.13 60.20 20.84 Q 60.47 21.56 60.75 22.33 Q 61.02 23.11 61.29 23.93 Q 61.57 24.75 61.84 25.59 Q 62.12 26.43 62.39 27.26 Q 62.66 28.09 62.94 28.89 Q 63.21 29.68 63.49 30.40 Q 63.76 31.12 64.03 31.75 Q 64.31 32.37 64.58 32.87 Q 64.86 33.36 65.13 33.70 Q 65.41 34.04 65.68 34.20 Q 65.95 34.36 66.23 34.32 Q 66.50 34.29 66.78 34.05 Q 67.05 33.81 67.32 33.36 Q 67.60 32.91 67.87 32.26 Q 68.15 31.61 68.42 30.77 Q 68.69 29.94 68.97 28.95 Q 69.24 27.95 69.52 26.84 Q 69.79 25.72 70.07 24.53 Q 70.34 23.34 70.61 22.12 Q 70.89 20.90 71.16 19.72 Q 71.44 18.54 71.71 17.44 Q 71.98 16.35 72.26 15.42 Q 72.53 14.48 72.81 13.76 Q 73.08 13.03 73.36 12.57 Q 73.63 12.11 73.90 11.95 Q 74.18 11.79 74.45 11.96 Q 74.73 12.13 75.00 12.63 Q 75.27 13.13 75.55 13.96 Q 75.82 14.79 76.10 15.91 Q 76.37 17.03 76.64 18.40 Q 76.92 19.76 77.19 21.30 Q 77.47 22.83 77.74 24.45 Q 78.02 26.07 78.29 27.68 Q 78.56 29.28 78.84 30.77 Q 79.11 32.25 79.39 33.51 Q 79.66 34.77 79.93 35.71 Q 80.21 36.64 80.48 37.17 Q 80.76 37.70 81.03 37.77 Q 81.31 37.83 81.58 37.41 Q 81.85 36.98 82.13 36.07 Q 82.40 35.16 82.68 33.80 Q 82.95 32.45 83.22 30.73 Q 83.50 29.02 83.77 27.06 Q 84.05 25.10 84.32 23.04 Q 84.59 20.98 84.87 18.98 Q 85.14 16.98 85.42 15.21 Q 85.69 13.44 85.97 12.06 Q 86.24 10.68 86.51 9.83 Q 86.79 8.99 87.06 8.76 Q 87.34 8.54 87.61 9.00 Q 87.88 9.46 88.16 10.59 Q 88.43 11.72 88.71 13.44 Q 88.98 15.17 89.25 17.36 Q 89.53 19.55 89.80 22.01 Q 90.08 24.47 90.35 26.98 Q 90.63 29.49 90.90 31.79 Q 91.17 34.09 91.45 35.95 Q 91.72 37.81 92.00 39.01 Q 92.27 40.20 92.54 40.58 Q 92.82 40.96 93.09 40.45 Q 93.37 39.93 93.64 38.53 Q 93.92 37.14 94.19 34.98 Q 94.46 32.82 94.74 30.10 Q 95.01 27.39 95.29 24.41 Q 95.56 21.42 95.83 18.52 Q 96.11 15.61 96.38 13.12 Q 96.66 10.63 96.93 8.89 Q 97.20 7.15 97.48 6.40 Q 97.75 5.65 98.03 6.03 Q 98.30 6.41 98.58 7.92 Q 98.85 9.43 99.12 11.93 Q 99.40 14.42 99.67 17.61 Q 99.95 20.80 100.22 24.29 Q 100.49 27.77 100.77 31.09 Q 101.04 34.40 101.32 37.08 Q 101.59 39.75 101.86 41.38 Q 102.14 43.01 102.41 43.32 Q 102.69 43.63 102.96 42.51 Q 103.24 41.39 103.51 38.52 Q 103.78 35.65 104.06 33.60 Q 104.33 31.55 104.61 29.53 Q 104.88 27.51 105.15 25.66 Q 105.43 23.80 105.70 22.21 Q 105.98 20.61 106.25 19.35 Q 106.53 18.09 106.80 17.21 Q 107.07 16.32 107.35 15.82 Q 107.62 15.31 107.90 15.16 Q 108.17 15.02 108.44 15.20 Q 108.72 15.37 108.99 15.81 Q 109.27 16.25 109.54 16.89 Q 109.81 17.53 110.09 18.30 Q 110.36 19.06 110.64 19.89 Q 110.91 20.71 111.19 21.54 Q 111.46 22.36 111.73 23.12 Q 112.01 23.88 112.28 24.54 Q 112.56 25.20 112.83 25.73 Q 113.10 26.26 113.38 26.64 Q 113.65 27.02 113.93 27.25 Q 114.20 27.47 114.47 27.55 Q 114.75 27.63 115.02 27.57 Q 115.30 27.52 115.57 27.36 Q 115.85 27.19 116.12 26.94 Q 116.39 26.69 116.67 26.39 Q 116.94 26.09 117.22 25.75 Q 117.49 25.42 117.76 25.09 Q 118.04 24.76 118.31 24.44 Q 118.59 24.13 118.86 23.86 Q 119.14 23.58 119.41 23.36 Q 119.68 23.14 119.96 22.98 Q 120.23 22.82 120.51 22.72 Q 120.78 22.62 121.05 22.58 Q 121.33 22.54 121.60 22.55 Q 121.88 22.57 122.15 22.63 Q 122.42 22.69 122.70 22.78 Q 122.97 22.88 123.25 23.00 Q 123.52 23.12 123.80 23.25 Q 124.07 23.39 124.34 23.52 Q 124.62 23.66 124.89 23.79 Q 125.17 23.91 125.44 24.03 Q 125.71 24.14 125.99 24.23 Q 126.26 24.33 126.54 24.39 Q 126.81 24.46 127.08 24.51 Q 127.36 24.55 127.63 24.57 Q 127.91 24.59 128.18 24.59 Q 128.46 24.58 128.73 24.56 Q 129.00 24.54 129.28 24.50 Q 129.55 24.46 129.83 24.42 Q 130.10 24.37 130.37 24.32 Q 130.65 24.26 130.92 24.21 Q 131.20 24.15 131.47 24.10 Q 131.75 24.05 132.02 24.00 Q 132.29 23.96 132.57 23.92 Q 132.84 23.88 133.12 23.85 Q 133.39 23.82 133.66 23.80 Q 133.94 23.78 134.21 23.77 Q 134.49 23.76 134.76 23.76 Q 135.03 23.76 135.31 23.77 Q 135.58 23.78 135.86 23.79 Q 136.13 23.81 136.41 23.83 Q 136.68 23.84 136.95 23.87 Q 137.23 23.89 137.50 23.91 Q 137.78 23.93 138.05 23.95 Q 138.32 23.97 138.60 23.99 Q 138.87 24.01 139.15 24.03 Q 139.42 24.05 139.69 24.06 Q 139.97 24.07 140.24 24.08 Q 140.52 24.09 140.79 24.09 Q 141.07 24.10 141.34 24.10 Q 141.61 24.10 141.89 24.09 Q 142.16 24.09 142.44 24.09 Q 142.71 24.08 142.98 24.07 Q 143.26 24.06 143.53 24.06 Q 143.81 24.05 144.08 24.04 Q 144.36 24.03 144.63 24.02 Q 144.90 24.01 145.18 24.00 Q 145.45 24.00 145.73 23.99 Q 146.00 23.98 146.00 23.98" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1"></path>
+</svg>
       Lalit Pathak
     </a>
-
-    <nav class="hidden md:flex items-center gap-7 text-sm">
-      <a href="#about" class="underline-hover pb-0.5">About</a>
-      <a href="#research" class="underline-hover pb-0.5">Research</a>
-      <a href="#lvk" class="underline-hover pb-0.5">LVK</a>
-      <a href="#publications" class="underline-hover pb-0.5">Publications</a>
-      <a href="#talks" class="underline-hover pb-0.5">Talks</a>
-      <a href="#teaching" class="underline-hover pb-0.5">Teaching</a>
-      <a href="#hobbies" class="underline-hover pb-0.5">Hobbies</a>
-      <a href="#contact" class="underline-hover pb-0.5">Contact</a>
-    </nav>
-
-    <div class="flex items-center gap-2">
-      <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode"
-        class="w-9 h-9 grid place-items-center rounded-full border border-hair hover:border-accent transition-colors">
-        <svg id="icon-sun" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <circle cx="12" cy="12" r="4.2"/>
-          <path d="M12 2.5v2.2M12 19.3v2.2M4.5 12H2.3M21.7 12h-2.2M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M18.2 5.8l-1.5 1.5M7.3 16.7l-1.5 1.5" stroke-linecap="round"/>
-        </svg>
-        <svg id="icon-moon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"
-        class="md:hidden w-9 h-9 grid place-items-center rounded-full border border-hair">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-          <path d="M4 7h16M4 12h16M4 17h16"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div id="mobile-menu" class="hidden md:hidden border-t border-hair bg-bg">
-    <nav class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4 text-base">
-      <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#lvk">LVK</a>
-      <a href="#publications">Publications</a>
-      <a href="#talks">Talks</a>
-      <a href="#teaching">Teaching</a>
-      <a href="#hobbies">Hobbies</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
+<nav class="hidden md:flex items-center gap-7 text-sm">
+<a class="underline-hover pb-0.5" href="#about">About</a>
+<a class="underline-hover pb-0.5" href="#research">Research</a>
+<a class="underline-hover pb-0.5" href="#lvk">LVK</a>
+<a class="underline-hover pb-0.5" href="#publications">Publications</a>
+<a class="underline-hover pb-0.5" href="#talks">Talks</a>
+<a class="underline-hover pb-0.5" href="#teaching">Teaching</a>
+<a class="underline-hover pb-0.5" href="#hobbies">Hobbies</a>
+<a class="underline-hover pb-0.5" href="#contact">Contact</a>
+</nav>
+<div class="flex items-center gap-2">
+<button aria-label="Switch to light mode" aria-pressed="false" class="w-9 h-9 grid place-items-center rounded-full border border-hair hover:border-accent transition-colors" id="theme-toggle" type="button">
+<svg class="w-4 h-4 hidden" fill="none" id="icon-sun" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4.2"></circle>
+<path d="M12 2.5v2.2M12 19.3v2.2M4.5 12H2.3M21.7 12h-2.2M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M18.2 5.8l-1.5 1.5M7.3 16.7l-1.5 1.5" stroke-linecap="round"></path>
+</svg>
+<svg class="w-4 h-4" fill="none" id="icon-moon" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24">
+<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" stroke-linejoin="round"></path>
+</svg>
+</button>
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu" class="md:hidden w-9 h-9 grid place-items-center rounded-full border border-hair" id="menu-toggle" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M4 7h16M4 12h16M4 17h16"></path>
+</svg>
+</button>
+</div>
+</div>
+<div class="hidden md:hidden border-t border-hair bg-bg" id="mobile-menu">
+<nav class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4 text-base">
+<a href="#about">About</a>
+<a href="#research">Research</a>
+<a href="#lvk">LVK</a>
+<a href="#publications">Publications</a>
+<a href="#talks">Talks</a>
+<a href="#teaching">Teaching</a>
+<a href="#hobbies">Hobbies</a>
+<a href="#contact">Contact</a>
+</nav>
+</div>
 </header>
-
 <main id="top">
-
 <!-- ============ HERO ============ -->
 <section class="relative pt-32 pb-20 md:pt-44 md:pb-28 px-6 md:px-10 overflow-hidden">
-      <div class="flex justify-center mb-12">
-      <figure id="top-coastal-portrait" class="w-full max-w-2xl">
-        <div class="overflow-hidden rounded-2xl border border-hair shadow-sm">
-          <img
-            src="images/lalit-coastal-portrait.png"
-            alt="Lalit Pathak at a coastal lookout"
-            class="w-full h-auto object-cover"
-            loading="eager">
-        </div>
-        <figcaption class="text-sm text-muted mt-3 text-center">
+<div class="flex justify-center mb-12">
+<figure class="w-full max-w-2xl" id="top-coastal-portrait">
+<div class="overflow-hidden rounded-2xl border border-hair shadow-sm">
+<img alt="Lalit Pathak at a coastal lookout" class="w-full h-auto object-cover" loading="eager" src="images/lalit-coastal-portrait.png"/>
+</div>
+<figcaption class="text-sm text-muted mt-3 text-center">
           Me somewhere on the Great Ocean Road, Victoria, Australia
         </figcaption>
-      </figure>
-    </div>
-
-    <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
+</figure>
+</div>
+<div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
 <div class="md:col-span-7">
 <p class="text-sm text-muted mb-4">Postdoctoral Fellow · IUCAA, Pune</p>
-      <h1 class="font-display font-medium leading-[1.08] text-[2.5rem] sm:text-5xl md:text-6xl">
+<h1 class="font-display font-medium leading-[1.08] text-[2.5rem] sm:text-5xl md:text-6xl">
         Turning detector noise into gravitational-wave astrophysics.
       </h1>
-      <p class="mt-7 text-lg text-muted max-w-lg leading-relaxed">
+<p class="mt-7 text-lg text-muted max-w-lg leading-relaxed">
         I'm Lalit Pathak. I build the statistical and computational methods used to find, characterize,
         and interpret gravitational-wave signals from compact binary mergers — from rapid parameter
         estimation to tests of general relativity.
       </p>
-      <div class="mt-9 flex flex-wrap items-center gap-5">
-        <a href="#publications" class="btn-solid px-6 py-3 rounded-full text-sm font-medium transition-colors">Read the research</a>
-        <a href="Lalit_Pathak_Academic_CV.pdf" class="btn-outline px-6 py-3 rounded-full text-sm font-medium transition-colors">Download CV</a>
-      </div>
-    </div>
-
+<div class="mt-9 flex flex-wrap items-center gap-5">
+<a class="btn-solid px-6 py-3 rounded-full text-sm font-medium transition-colors" href="#publications">Read the research</a>
+<a class="btn-outline px-6 py-3 rounded-full text-sm font-medium transition-colors" href="Lalit_Pathak_Academic_CV.pdf">Download CV</a>
+</div>
+</div>
 <div class="md:col-span-5">
-<div class="hero-waveform-wrap w-full" role="img" aria-label="A noisy gravitational-wave detector signal resolving into the clean simulated strain from a compact-binary merger">
-        <img src="chirp-waveform_with_noise.svg" alt="" class="wave-noisy">
-        <img src="chirp-waveform.svg" alt="" class="wave-clean">
-      </div>
-    </div>
-    </div>
+<div aria-label="A noisy gravitational-wave detector signal resolving into the clean simulated strain from a compact-binary merger" class="hero-waveform-wrap w-full" role="img">
+<img alt="" class="wave-noisy" src="chirp-waveform_with_noise.svg"/>
+<img alt="" class="wave-clean" src="chirp-waveform.svg"/>
+</div>
+</div>
+</div>
 </section>
-
 <!-- ============ ABOUT ============ -->
-<section id="about" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair">
-  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
-
-    <div class="md:col-span-7">
-      <h2 class="font-display text-3xl md:text-4xl mb-6">About</h2>
-      <div class="space-y-5 text-[1.05rem] leading-relaxed text-muted max-w-xl">
-        <p>
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="about">
+<div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
+<div class="md:col-span-7">
+<h2 class="font-display text-3xl md:text-4xl mb-6">About</h2>
+<div class="space-y-5 text-[1.05rem] leading-relaxed text-muted max-w-xl">
+<p>
           My research focuses on extracting astrophysical and fundamental-physics information from
           gravitational-wave observations. I develop and apply computational and statistical methods for
           gravitational-wave data analysis, with particular interests in compact-binary parameter
           estimation, waveform modelling, population inference, gravitational-wave cosmology, and tests of
           general relativity.
         </p>
-        <p>
+<p>
           I completed my Ph.D. in Physics at IIT Gandhinagar in 2024, working on fast parameter-estimation
           frameworks for compact binaries. I'm currently a postdoctoral fellow at IUCAA, Pune, where I lead
           the PyCBC-based subsolar-mass search for LIGO–Virgo–KAGRA's fourth observing run and work on
           gravitational-wave lensing, population inference, and machine-learning methods for the stochastic
           gravitational-wave background.
         </p>
-      </div>
-    </div>
-
-    <div class="md:col-span-5">
-      <h3 class="text-sm text-muted mb-6">Positions &amp; education</h3>
-      <div class="space-y-7">
-        <div class="timeline-item">
-          <p class="font-medium">Postdoctoral Fellow</p>
-          <p class="text-sm text-muted">IUCAA, Pune · Aug 2025 – Present</p>
-        </div>
-        <div class="timeline-item">
-          <p class="font-medium">Postdoctoral Fellow</p>
-          <p class="text-sm text-muted">Dept. of Astronomy &amp; Astrophysics, TIFR, Mumbai · Jul 2024 – Jul 2025</p>
-        </div>
-        <div class="timeline-item">
-          <p class="font-medium">Visiting Research Assistant</p>
-          <p class="text-sm text-muted">Dept. of Astronomy &amp; Astrophysics, TIFR, Mumbai · Feb 2024 – Jul 2024</p>
-        </div>
-        <div class="timeline-item">
-          <p class="font-medium">Ph.D., Physics</p>
-          <p class="text-sm text-muted">IIT Gandhinagar · 2018 – 2024</p>
-        </div>
-        <div class="timeline-item">
-          <p class="font-medium">M.Sc., Physics</p>
-          <p class="text-sm text-muted">University of Delhi · 2017</p>
-        </div>
-        <div class="timeline-item">
-          <p class="font-medium">B.Sc. (Hons.), Physics</p>
-          <p class="text-sm text-muted">Hansraj College, University of Delhi · 2013</p>
-        </div>
-      </div>
-      <p class="text-sm text-muted mt-8">
-        <span class="text-accent">Award</span> — TCS Research Scholarship (2019), for Ph.D. research at IIT Gandhinagar.
+</div>
+</div>
+<div class="md:col-span-5">
+<h3 class="text-sm text-muted mb-6">Positions &amp; education</h3>
+<div class="space-y-7">
+<div class="timeline-item">
+<p class="font-medium">Postdoctoral Fellow</p>
+<p class="text-sm text-muted">IUCAA, Pune · Aug 2025 – Present</p>
+</div>
+<div class="timeline-item">
+<p class="font-medium">Postdoctoral Fellow</p>
+<p class="text-sm text-muted">Dept. of Astronomy &amp; Astrophysics, TIFR, Mumbai · Jul 2024 – Jul 2025</p>
+</div>
+<div class="timeline-item">
+<p class="font-medium">Visiting Research Assistant</p>
+<p class="text-sm text-muted">Dept. of Astronomy &amp; Astrophysics, TIFR, Mumbai · Feb 2024 – Jul 2024</p>
+</div>
+<div class="timeline-item">
+<p class="font-medium">Ph.D., Physics</p>
+<p class="text-sm text-muted">IIT Gandhinagar · 2018 – 2024</p>
+</div>
+<div class="timeline-item">
+<p class="font-medium">M.Sc., Physics</p>
+<p class="text-sm text-muted">University of Delhi · 2017</p>
+</div>
+<div class="timeline-item">
+<p class="font-medium">B.Sc. (Hons.), Physics</p>
+<p class="text-sm text-muted">Hansraj College, University of Delhi · 2013</p>
+</div>
+</div>
+<p class="text-sm text-muted mt-8">
+<span class="text-accent">Award</span> — TCS Research Scholarship (2019), for Ph.D. research at IIT Gandhinagar.
       </p>
-    </div>
-
-  </div>
+</div>
+</div>
 </section>
-
 <!-- ============ RESEARCH INTERESTS ============ -->
-<section id="research" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="research">
 
-  <div class="merger-motif" style="position:absolute; left:4%; top:18%; width:170px; height:170px; --drift:105s; --rotation:-25deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="47" ry="20" transform="rotate(-25 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="64" ry="28" transform="rotate(-25 100 100)"/>
-      <circle class="body" cx="81" cy="94" r="7"/>
-      <circle class="body" cx="116" cy="105" r="3.5"/>
-      <path class="wave" d="M135 99c12-5 17 7 28 2s13-10 24-4"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:68%; top:10%; width:135px; height:135px; --drift:108s; --rotation:58deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="43" ry="18" transform="rotate(58 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="60" ry="26" transform="rotate(58 100 100)"/>
-      <circle class="body" cx="94" cy="79" r="5"/>
-      <circle class="body" cx="107" cy="119" r="3"/>
-      <path class="wave" d="M31 80c11 6 17-6 28 0s16 8 27 1"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:82%; top:66%; width:205px; height:205px; --drift:108s; --rotation:32deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="24" transform="rotate(32 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="32" transform="rotate(32 100 100)"/>
-      <circle class="body" cx="80" cy="107" r="7"/>
-      <circle class="body" cx="117" cy="91" r="3.5"/>
-      <path class="wave" d="M35 76c12 7 18-7 29 0s17 8 27 1"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:24%; top:70%; width:125px; height:125px; --drift:108s; --rotation:-62deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="41" ry="17" transform="rotate(-62 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="58" ry="25" transform="rotate(-62 100 100)"/>
-      <circle class="body" cx="94" cy="81" r="5"/>
-      <circle class="body" cx="108" cy="116" r="3"/>
-      <path class="wave" d="M123 150c11-6 17 6 28 0s17-8 27-2"/>
-    </svg>
-  </div>
-
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-3xl md:text-4xl mb-12">Research interests</h2>
-    <dl class="grid sm:grid-cols-2 gap-x-10 gap-y-10">
-      <div class="border-t border-hair pt-5">
-        <dt class="font-display text-lg mb-2">Parameter estimation</dt>
-        <dd class="text-muted leading-relaxed">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-display text-3xl md:text-4xl mb-12">Research interests</h2>
+<dl class="grid sm:grid-cols-2 gap-x-10 gap-y-10">
+<div class="border-t border-hair pt-5">
+<dt class="font-display text-lg mb-2">Parameter estimation</dt>
+<dd class="text-muted leading-relaxed">
           Fast, faithful inference of compact-binary source properties from gravitational-wave strain,
           using meshfree approximation and numerical linear algebra to make posteriors tractable at scale.
         </dd>
-      </div>
-      <div class="border-t border-hair pt-5">
-        <dt class="font-display text-lg mb-2">Gravitational-wave searches</dt>
-        <dd class="text-muted leading-relaxed">
+</div>
+<div class="border-t border-hair pt-5">
+<dt class="font-display text-lg mb-2">Gravitational-wave searches</dt>
+<dd class="text-muted leading-relaxed">
           Search pipelines for compact-binary signals, including a PyCBC-based subsolar-mass search and
           low-latency detection with PyCBC Live on IUCAA's search infrastructure.
         </dd>
-      </div>
-      <div class="border-t border-hair pt-5">
-        <dt class="font-display text-lg mb-2">Astrophysics &amp; cosmology with GW data</dt>
-        <dd class="text-muted leading-relaxed">
+</div>
+<div class="border-t border-hair pt-5">
+<dt class="font-display text-lg mb-2">Astrophysics &amp; cosmology with GW data</dt>
+<dd class="text-muted leading-relaxed">
           Population and redshift-distribution inference for binary black holes, and spectral-siren
           measurements of the Hubble constant.
         </dd>
-      </div>
-      <div class="border-t border-hair pt-5">
-        <dt class="font-display text-lg mb-2">Tests of general relativity</dt>
-        <dd class="text-muted leading-relaxed">
+</div>
+<div class="border-t border-hair pt-5">
+<dt class="font-display text-lg mb-2">Tests of general relativity</dt>
+<dd class="text-muted leading-relaxed">
           Using gravitational-wave observations to probe deviations from GR, including constraints on the
           speed and propagation of gravitational waves.
         </dd>
-      </div>
-      <div class="border-t border-hair pt-5">
-        <dt class="font-display text-lg mb-2">Machine learning</dt>
-        <dd class="text-muted leading-relaxed">
+</div>
+<div class="border-t border-hair pt-5">
+<dt class="font-display text-lg mb-2">Machine learning</dt>
+<dd class="text-muted leading-relaxed">
           Application of machine learning models in various aspects of gravitational-wave data analysis. 
         </dd>
-      </div>
-    </dl>
-  </div>
+</div>
+</dl>
+</div>
 </section>
-
 <!-- ============ LVK CONTRIBUTIONS ============ -->
-<section id="lvk" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
-
-  <div class="merger-motif" style="position:absolute; left:3%; top:14%; width:165px; height:165px; --drift:108s; --rotation:-28deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="46" ry="20" transform="rotate(-28 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="63" ry="28" transform="rotate(-28 100 100)"/>
-      <circle class="body" cx="81" cy="94" r="8"/>
-      <circle class="body" cx="116" cy="105" r="4"/>
-      <path class="wave" d="M134 99c11-5 17 7 28 2s16-9 27-4"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="position:absolute; left:78%; top:8%; width:145px; height:145px; --drift:118s; --rotation:42deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="44" ry="19" transform="rotate(42 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="61" ry="27" transform="rotate(42 100 100)"/>
-      <circle class="body" cx="82" cy="108" r="7"/>
-      <circle class="body" cx="117" cy="91" r="3.5"/>
-      <path class="wave" d="M30 107c11 5 17-7 28-1s17 9 28 2"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="position:absolute; left:69%; top:62%; width:210px; height:210px; --drift:128s; --rotation:-38deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="51" ry="22" transform="rotate(-38 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="31" transform="rotate(-38 100 100)"/>
-      <circle class="body" cx="80" cy="93" r="9"/>
-      <circle class="body" cx="118" cy="106" r="5"/>
-      <path class="wave" d="M27 82c12 7 18-6 29 0s17 8 28 1"/>
-    </svg>
-  </div>
-
-  <div class="merger-motif" style="position:absolute; left:18%; top:72%; width:130px; height:130px; --drift:96s; --rotation:68deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="41" ry="17" transform="rotate(68 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="58" ry="25" transform="rotate(68 100 100)"/>
-      <circle class="body" cx="95" cy="79" r="5"/>
-      <circle class="body" cx="106" cy="118" r="7"/>
-      <path class="wave" d="M112 45c10-6 17 6 27 1s16-7 26 0"/>
-    </svg>
-  </div>
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="lvk">
 
 
-  <div class="merger-motif" style="position:absolute; left:43%; top:-10%; width:185px; height:185px; --drift:102s; --rotation:-52deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="49" ry="21" transform="rotate(-52 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="68" ry="29" transform="rotate(-52 100 100)"/>
-      <circle class="body" cx="80" cy="94" r="8"/>
-      <circle class="body" cx="118" cy="106" r="4"/>
-      <path class="wave" d="M129 94c11-6 17 7 28 1s16-9 27-3"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:91%; top:34%; width:175px; height:175px; --drift:121s; --rotation:24deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="47" ry="20" transform="rotate(24 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="65" ry="28" transform="rotate(24 100 100)"/>
-      <circle class="body" cx="83" cy="105" r="7"/>
-      <circle class="body" cx="116" cy="94" r="5"/>
-      <path class="wave" d="M30 91c12 6 18-7 29-1s17 9 28 2"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:43%; top:48%; width:120px; height:120px; --drift:91s; --rotation:76deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="40" ry="17" transform="rotate(76 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="56" ry="24" transform="rotate(76 100 100)"/>
-      <circle class="body" cx="95" cy="80" r="5"/>
-      <circle class="body" cx="106" cy="118" r="7"/>
-      <path class="wave" d="M112 44c10-6 17 6 27 1s16-8 26-1"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:2%; top:88%; width:195px; height:195px; --drift:132s; --rotation:-16deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="50" ry="22" transform="rotate(-16 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="30" transform="rotate(-16 100 100)"/>
-      <circle class="body" cx="80" cy="96" r="9"/>
-      <circle class="body" cx="119" cy="104" r="4"/>
-      <path class="wave" d="M131 94c11 6 18-6 28 0s16 8 27 2"/>
-    </svg>
-  </div>
 
-  <div class="max-w-6xl mx-auto">
-    <div class="max-w-3xl mb-12">
-      <p class="text-sm text-accent mb-3">LIGO–Virgo–KAGRA Collaboration</p>
-      <h2 class="font-display text-3xl md:text-4xl mb-5">Direct LVK contributions</h2>
-      <p class="text-muted leading-relaxed">
+
+
+<div class="max-w-6xl mx-auto">
+<div class="max-w-3xl mb-12">
+<p class="text-sm text-accent mb-3">LIGO–Virgo–KAGRA Collaboration</p>
+<h2 class="font-display text-3xl md:text-4xl mb-5">Direct LVK contributions</h2>
+<p class="text-muted leading-relaxed">
         Alongside my independent research, I contribute directly to the LIGO–Virgo–KAGRA (LVK)
         Collaboration through compact-binary analysis, rapid-response and parameter-estimation
         activities, and internal review of short-author LSC papers. These contributions are publicly
-        recorded by the <a href="https://laac.docs.ligo.org/recognition/2026/06/18/lalit-pathak"
-        class="underline-hover pb-0.5" target="_blank" rel="noopener noreferrer">LSC Recognition Program</a>
+        recorded by the <a class="underline-hover pb-0.5" href="https://laac.docs.ligo.org/recognition/2026/06/18/lalit-pathak" rel="noopener noreferrer" target="_blank">LSC Recognition Program</a>
         (June 2026).
       </p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="border-t border-hair pt-5">
-        <h3 class="font-display text-lg mb-4">Collaboration papers</h3>
-        <ul class="space-y-3 text-muted leading-relaxed text-sm">
-          <li>Served on the analysis team of <em>GWTC 4 Population Properties of Merging Compact Binaries</em>.</li>
-          <li>Served on the analysis team of <em>GWTC-5: An Introduction to Version 5.0 of the Gravitational-Wave Transient Catalog</em>.</li>
-          <li>Served on the analysis team of the search for compact binary coalescences with sub-solar-mass components in the second part of O4.</li>
-        </ul>
-      </div>
-
-      <div class="border-t border-hair pt-5">
-        <h3 class="font-display text-lg mb-4">Rapid response &amp; parameter estimation</h3>
-        <p class="text-muted leading-relaxed text-sm mb-4">
+</div>
+<div class="grid md:grid-cols-3 gap-10">
+<div class="border-t border-hair pt-5">
+<h3 class="font-display text-lg mb-4">Collaboration papers</h3>
+<ul class="space-y-3 text-muted leading-relaxed text-sm">
+<li>Served on the analysis team of <em>GWTC 4 Population Properties of Merging Compact Binaries</em>.</li>
+<li>Served on the analysis team of <em>GWTC-5: An Introduction to Version 5.0 of the Gravitational-Wave Transient Catalog</em>.</li>
+<li>Served on the analysis team of the search for compact binary coalescences with sub-solar-mass components in the second part of O4.</li>
+</ul>
+</div>
+<div class="border-t border-hair pt-5">
+<h3 class="font-display text-lg mb-4">Rapid response &amp; parameter estimation</h3>
+<p class="text-muted leading-relaxed text-sm mb-4">
           Served on rapid-response or parameter-estimation ROTAs for candidate events, including:
         </p>
-        <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted">
-          <li>S240406aj</li>
-          <li>S240525p</li>
-          <li>S240507p</li>
-          <li>S240104bl</li>
-          <li>S231020ba</li>
-          <li>S230712aj</li>
-          <li>S251112cm</li>
-        </ul>
-      </div>
-
-      <div class="border-t border-hair pt-5">
-        <h3 class="font-display text-lg mb-4">P&amp;P reviews</h3>
-        <p class="text-muted leading-relaxed text-sm mb-4">
+<ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted">
+<li>S240406aj</li>
+<li>S240525p</li>
+<li>S240507p</li>
+<li>S240104bl</li>
+<li>S231020ba</li>
+<li>S230712aj</li>
+<li>S251112cm</li>
+</ul>
+</div>
+<div class="border-t border-hair pt-5">
+<h3 class="font-display text-lg mb-4">P&amp;P reviews</h3>
+<p class="text-muted leading-relaxed text-sm mb-4">
           Provided P&amp;P reviews of short-author LSC papers, including work on:
         </p>
-        <ul class="space-y-3 text-muted leading-relaxed text-sm">
-          <li><em>Varaha: A promising sampler for obtaining gravitational wave posteriors</em></li>
-          <li><em>Black Hole Spectroscopy with Conditional Variational Auto Encoders</em></li>
-          <li><em>Observable spins in gravitational waves from compact binary mergers</em></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mt-10 pt-5 border-t border-hair text-sm text-muted">
-      <a href="https://laac.docs.ligo.org/recognition/2026/06/18/lalit-pathak"
-         class="underline-hover pb-0.5" target="_blank" rel="noopener noreferrer">
+<ul class="space-y-3 text-muted leading-relaxed text-sm">
+<li><em>Varaha: A promising sampler for obtaining gravitational wave posteriors</em></li>
+<li><em>Black Hole Spectroscopy with Conditional Variational Auto Encoders</em></li>
+<li><em>Observable spins in gravitational waves from compact binary mergers</em></li>
+</ul>
+</div>
+</div>
+<div class="mt-10 pt-5 border-t border-hair text-sm text-muted">
+<a class="underline-hover pb-0.5" href="https://laac.docs.ligo.org/recognition/2026/06/18/lalit-pathak" rel="noopener noreferrer" target="_blank">
         View the public LVK recognition record →
       </a>
-    </div>
-  </div>
+</div>
+</div>
 </section>
-
 <!-- ============ PUBLICATIONS ============ -->
-<section id="publications" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-3xl md:text-4xl mb-3">Publications</h2>
-    <p class="text-muted mb-12 max-w-xl">
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="publications">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-display text-3xl md:text-4xl mb-3">Publications</h2>
+<p class="text-muted mb-12 max-w-xl">
       Full and current listings are on my
-      <a href="https://inspirehep.net/authors/2964265?ui-citation-summary=true" class="underline-hover pb-0.5">INSPIRE-HEP</a>
-      and <a href="https://scholar.google.com/citations?user=KhVSSlMAAAAJ&hl=en" class="underline-hover pb-0.5">Google Scholar</a> profiles.
+      <a class="underline-hover pb-0.5" href="https://inspirehep.net/authors/2964265?ui-citation-summary=true">INSPIRE-HEP</a>
+      and <a class="underline-hover pb-0.5" href="https://scholar.google.com/citations?user=KhVSSlMAAAAJ&amp;hl=en">Google Scholar</a> profiles.
     </p>
-
-    <!-- Selected research publications -->
-    <h3 class="font-display text-xl mb-6">Selected research publications</h3>
-    <ol class="divide-y divide-hair border-t border-b border-hair mb-16">
-
-      <li class="py-6">
-        <p class="leading-snug"><strong>L. Pathak</strong>, H. Phurailatpam, and A. Gopakumar</p>
-        <p class="mt-1 leading-snug">On the Presence of a Tertiary Compact Object in GW190814</p>
-        <p class="text-sm text-muted mt-2">Accepted in <em>ApJ</em> (2026)
-          <a href="https://arxiv.org/abs/2605.21955" class="arxiv-tag underline-hover ml-2">arXiv:2605.21955</a>
-        </p>
-      </li>
-
-      <li class="py-6">
-        <p class="leading-snug">A. Sharma, <strong>L. Pathak</strong>, S. Roy, and A. S. Sengupta</p>
-        <p class="mt-1 leading-snug">Rapid parameter estimation with the full symphony of compact binary mergers using meshfree approximation</p>
-        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 114, 044043 (2026)
-          <a href="https://arxiv.org/abs/2508.04172" class="arxiv-tag underline-hover ml-2">arXiv:2508.04172</a>
-        </p>
-      </li>
-
-      <li class="py-6">
-        <p class="leading-snug">C. Karathanasis, S. Mukherjee, <strong>L. Pathak</strong>, S. Vallejo-Peña, M. R. Sah, B. Revenu, A. E. Romano, and J. Garcia-Bellido</p>
-        <p class="mt-1 leading-snug">Blinded Mock Data Challenge: Is the Spectral Siren Technique Robust for Measuring the Hubble Constant?</p>
-        <p class="text-sm text-muted mt-2">(2026)
-          <a href="https://arxiv.org/abs/2604.26273" class="arxiv-tag underline-hover ml-2">arXiv:2604.26273</a>
-        </p>
-      </li>
-
-      <li class="py-6">
-        <p class="leading-snug"><strong>L. Pathak</strong>, A. Reza, and A. S. Sengupta</p>
-        <p class="mt-1 leading-snug">Fast and faithful interpolation of numerical relativity surrogate waveforms using meshfree approximation</p>
-        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 110, 064022 (2024)</p>
-      </li>
-
-      <li class="py-6">
-        <p class="leading-snug">S. Shukla, <strong>L. Pathak</strong>, and A. Sengupta</p>
-        <p class="mt-1 leading-snug">Pinpointing Binary Neutron Star sources with a global network of GW Detectors, including LIGO-Aundha</p>
-        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 109, 044051 (2024)</p>
-      </li>
-
-      <li class="py-6">
-        <p class="leading-snug"><strong>L. Pathak</strong>, S. Munishwar, A. Reza, and A. S. Sengupta</p>
-        <p class="mt-1 leading-snug">Prompt sky localization of compact binary coalescences using meshfree approximation</p>
-        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 109, 024053 (2024)</p>
-      </li>
-
-      <li class="py-6">
-        <p class="leading-snug">R. Ghosh, S. Nair, <strong>L. Pathak</strong>, S. Sarkar, and A. S. Sengupta</p>
-        <p class="mt-1 leading-snug">Does the speed of gravitational waves depend on the source velocity?</p>
-        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 108, 124017 (2023)</p>
-      </li>
-
-      <li class="py-6">
-        <p class="leading-snug"><strong>L. Pathak</strong>, A. Reza, and A. S. Sengupta</p>
-        <p class="mt-1 leading-snug">Fast likelihood evaluation using meshfree approximations for reconstructing compact binary sources</p>
-        <p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 108, 064055 (2023)</p>
-      </li>
-
-    </ol>
-
-    <!-- LVK collaboration publications -->
-    <div class="flex items-center justify-between mb-6">
-      <h3 class="font-display text-xl">LIGO–Virgo–KAGRA collaboration publications</h3>
-      <button id="lvk-toggle" type="button" aria-expanded="false" aria-controls="lvk-list"
-        class="text-sm underline-hover pb-0.5 whitespace-nowrap ml-4">Show all 14</button>
-    </div>
-
-    <ol id="lvk-list" class="accordion-body divide-y divide-hair border-t border-hair">
-
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">Updated Upper Limits on the Isotropic Gravitational-Wave Background from LIGO, Virgo, and KAGRA Data through April 2025</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2608.23477" class="arxiv-tag underline-hover">arXiv:2608.23477</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">Constraints on ultralight bosons from merging binary and remnant black holes observed during the second and third parts of the fourth LIGO-Virgo-KAGRA observing run</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2608.11620" class="arxiv-tag underline-hover">arXiv:2608.11620</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">L. Sun et al., LIGO Scientific, KAGRA, and Virgo Collaborations</p>
-        <p class="mt-1 leading-snug">LIGO A♯: Detector Design and Science Prospects Beyond A+</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2608.11673" class="arxiv-tag underline-hover">arXiv:2608.11673</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-5.0: Tests of General Relativity</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2607.19293" class="arxiv-tag underline-hover">arXiv:2607.19293</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">Open Data from LIGO, Virgo, and KAGRA through the Second Part of the Fourth Observing Run</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27090" class="arxiv-tag underline-hover">arXiv:2605.27090</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-5.0: Observations from the Second Part of the Fourth LIGO-Virgo-KAGRA Observing Run and Updates to the Gravitational-Wave Transient Catalog</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27225" class="arxiv-tag underline-hover">arXiv:2605.27225</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-5.0: Population Properties of Merging Compact Binaries</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27226" class="arxiv-tag underline-hover">arXiv:2605.27226</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-5.0: Constraints on the Cosmic Expansion Rate and Modified Gravitational-wave Propagation</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27227" class="arxiv-tag underline-hover">arXiv:2605.27227</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-5.0: Methods for Identifying and Characterizing Gravitational-wave Transients</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27224" class="arxiv-tag underline-hover">arXiv:2605.27224</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-5.0: An Introduction to Version 5.0 of the Gravitational-Wave Transient Catalog</p>
-        <p class="text-sm text-muted mt-2">(2026) <a href="https://arxiv.org/abs/2605.27223" class="arxiv-tag underline-hover">arXiv:2605.27223</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-4.0: Updating the Gravitational-Wave Transient Catalog with Observations from the First Part of the Fourth LIGO-Virgo-KAGRA Observing Run</p>
-        <p class="text-sm text-muted mt-2">(2025) <a href="https://arxiv.org/abs/2508.18082" class="arxiv-tag underline-hover">arXiv:2508.18082</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-4.0: Population Properties of Merging Compact Binaries</p>
-        <p class="text-sm text-muted mt-2">(2025) <a href="https://arxiv.org/abs/2508.18083" class="arxiv-tag underline-hover">arXiv:2508.18083</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-4.0: Methods for Identifying and Characterizing Gravitational-wave Transients</p>
-        <p class="text-sm text-muted mt-2">(2025) <a href="https://arxiv.org/abs/2508.18081" class="arxiv-tag underline-hover">arXiv:2508.18081</a></p>
-      </li>
-      <li class="py-5">
-        <p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
-        <p class="mt-1 leading-snug">GWTC-4.0: An Introduction to Version 4.0 of the Gravitational-Wave Transient Catalog</p>
-        <p class="text-sm text-muted mt-2"><em>Astrophys. J. Lett.</em> 995 (2025) 1, L18</p>
-      </li>
-
-    </ol>
-  </div>
+<!-- Selected research publications -->
+<h3 class="font-display text-xl mb-6">Selected research publications</h3>
+<ol class="divide-y divide-hair border-t border-b border-hair mb-16">
+<li class="py-6">
+<p class="leading-snug"><strong>L. Pathak</strong>, H. Phurailatpam, and A. Gopakumar</p>
+<p class="mt-1 leading-snug">On the Presence of a Tertiary Compact Object in GW190814</p>
+<p class="text-sm text-muted mt-2">Accepted in <em>ApJ</em> (2026)
+          <a class="arxiv-tag underline-hover ml-2" href="https://arxiv.org/abs/2605.21955">arXiv:2605.21955</a>
+</p>
+</li>
+<li class="py-6">
+<p class="leading-snug">A. Sharma, <strong>L. Pathak</strong>, S. Roy, and A. S. Sengupta</p>
+<p class="mt-1 leading-snug">Rapid parameter estimation with the full symphony of compact binary mergers using meshfree approximation</p>
+<p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 114, 044043 (2026)
+          <a class="arxiv-tag underline-hover ml-2" href="https://arxiv.org/abs/2508.04172">arXiv:2508.04172</a>
+</p>
+</li>
+<li class="py-6">
+<p class="leading-snug">C. Karathanasis, S. Mukherjee, <strong>L. Pathak</strong>, S. Vallejo-Peña, M. R. Sah, B. Revenu, A. E. Romano, and J. Garcia-Bellido</p>
+<p class="mt-1 leading-snug">Blinded Mock Data Challenge: Is the Spectral Siren Technique Robust for Measuring the Hubble Constant?</p>
+<p class="text-sm text-muted mt-2">(2026)
+          <a class="arxiv-tag underline-hover ml-2" href="https://arxiv.org/abs/2604.26273">arXiv:2604.26273</a>
+</p>
+</li>
+<li class="py-6">
+<p class="leading-snug"><strong>L. Pathak</strong>, A. Reza, and A. S. Sengupta</p>
+<p class="mt-1 leading-snug">Fast and faithful interpolation of numerical relativity surrogate waveforms using meshfree approximation</p>
+<p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 110, 064022 (2024)</p>
+</li>
+<li class="py-6">
+<p class="leading-snug">S. Shukla, <strong>L. Pathak</strong>, and A. Sengupta</p>
+<p class="mt-1 leading-snug">Pinpointing Binary Neutron Star sources with a global network of GW Detectors, including LIGO-Aundha</p>
+<p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 109, 044051 (2024)</p>
+</li>
+<li class="py-6">
+<p class="leading-snug"><strong>L. Pathak</strong>, S. Munishwar, A. Reza, and A. S. Sengupta</p>
+<p class="mt-1 leading-snug">Prompt sky localization of compact binary coalescences using meshfree approximation</p>
+<p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 109, 024053 (2024)</p>
+</li>
+<li class="py-6">
+<p class="leading-snug">R. Ghosh, S. Nair, <strong>L. Pathak</strong>, S. Sarkar, and A. S. Sengupta</p>
+<p class="mt-1 leading-snug">Does the speed of gravitational waves depend on the source velocity?</p>
+<p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 108, 124017 (2023)</p>
+</li>
+<li class="py-6">
+<p class="leading-snug"><strong>L. Pathak</strong>, A. Reza, and A. S. Sengupta</p>
+<p class="mt-1 leading-snug">Fast likelihood evaluation using meshfree approximations for reconstructing compact binary sources</p>
+<p class="text-sm text-muted mt-2"><em>Phys. Rev. D</em> 108, 064055 (2023)</p>
+</li>
+</ol>
+<!-- LVK collaboration publications -->
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-display text-xl">LIGO–Virgo–KAGRA collaboration publications</h3>
+<button aria-controls="lvk-list" aria-expanded="false" class="text-sm underline-hover pb-0.5 whitespace-nowrap ml-4" id="lvk-toggle" type="button">Show all 14</button>
+</div>
+<ol class="accordion-body divide-y divide-hair border-t border-hair" id="lvk-list">
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">Updated Upper Limits on the Isotropic Gravitational-Wave Background from LIGO, Virgo, and KAGRA Data through April 2025</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2608.23477">arXiv:2608.23477</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">Constraints on ultralight bosons from merging binary and remnant black holes observed during the second and third parts of the fourth LIGO-Virgo-KAGRA observing run</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2608.11620">arXiv:2608.11620</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">L. Sun et al., LIGO Scientific, KAGRA, and Virgo Collaborations</p>
+<p class="mt-1 leading-snug">LIGO A♯: Detector Design and Science Prospects Beyond A+</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2608.11673">arXiv:2608.11673</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-5.0: Tests of General Relativity</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2607.19293">arXiv:2607.19293</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">Open Data from LIGO, Virgo, and KAGRA through the Second Part of the Fourth Observing Run</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2605.27090">arXiv:2605.27090</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-5.0: Observations from the Second Part of the Fourth LIGO-Virgo-KAGRA Observing Run and Updates to the Gravitational-Wave Transient Catalog</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2605.27225">arXiv:2605.27225</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-5.0: Population Properties of Merging Compact Binaries</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2605.27226">arXiv:2605.27226</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-5.0: Constraints on the Cosmic Expansion Rate and Modified Gravitational-wave Propagation</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2605.27227">arXiv:2605.27227</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-5.0: Methods for Identifying and Characterizing Gravitational-wave Transients</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2605.27224">arXiv:2605.27224</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-5.0: An Introduction to Version 5.0 of the Gravitational-Wave Transient Catalog</p>
+<p class="text-sm text-muted mt-2">(2026) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2605.27223">arXiv:2605.27223</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-4.0: Updating the Gravitational-Wave Transient Catalog with Observations from the First Part of the Fourth LIGO-Virgo-KAGRA Observing Run</p>
+<p class="text-sm text-muted mt-2">(2025) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2508.18082">arXiv:2508.18082</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-4.0: Population Properties of Merging Compact Binaries</p>
+<p class="text-sm text-muted mt-2">(2025) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2508.18083">arXiv:2508.18083</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-4.0: Methods for Identifying and Characterizing Gravitational-wave Transients</p>
+<p class="text-sm text-muted mt-2">(2025) <a class="arxiv-tag underline-hover" href="https://arxiv.org/abs/2508.18081">arXiv:2508.18081</a></p>
+</li>
+<li class="py-5">
+<p class="leading-snug">LIGO Scientific, KAGRA, and Virgo Collaborations (A. G. Abac et al.)</p>
+<p class="mt-1 leading-snug">GWTC-4.0: An Introduction to Version 4.0 of the Gravitational-Wave Transient Catalog</p>
+<p class="text-sm text-muted mt-2"><em>Astrophys. J. Lett.</em> 995 (2025) 1, L18</p>
+</li>
+</ol>
+</div>
 </section>
-
 <!-- ============ TALKS ============ -->
-<section id="talks" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="talks">
 
-  <div class="merger-motif" style="position:absolute; left:2%; top:16%; width:155px; height:155px; --drift:105s; --rotation:42deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="46" ry="20" transform="rotate(42 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="63" ry="28" transform="rotate(42 100 100)"/>
-      <circle class="body" cx="82" cy="108" r="7"/>
-      <circle class="body" cx="116" cy="91" r="3.5"/>
-      <path class="wave" d="M128 108c11-6 18 7 29 1s16-8 27-2"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:75%; top:8%; width:120px; height:120px; --drift:105s; --rotation:-18deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="40" ry="17" transform="rotate(-18 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="57" ry="25" transform="rotate(-18 100 100)"/>
-      <circle class="body" cx="95" cy="81" r="5"/>
-      <circle class="body" cx="107" cy="118" r="3"/>
-      <path class="wave" d="M32 106c10 5 17-7 28-1s17 8 28 2"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:61%; top:58%; width:215px; height:215px; --drift:108s; --rotation:-38deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="23" transform="rotate(-38 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="31" transform="rotate(-38 100 100)"/>
-      <circle class="body" cx="80" cy="93" r="7"/>
-      <circle class="body" cx="118" cy="106" r="3.5"/>
-      <path class="wave" d="M27 82c12 7 18-6 29 0s17 8 28 1"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:19%; top:71%; width:145px; height:145px; --drift:108s; --rotation:70deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="44" ry="19" transform="rotate(70 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="61" ry="27" transform="rotate(70 100 100)"/>
-      <circle class="body" cx="95" cy="79" r="5"/>
-      <circle class="body" cx="106" cy="119" r="3"/>
-      <path class="wave" d="M112 45c10-6 17 6 27 1s16-7 26 0"/>
-    </svg>
-  </div>
-
-  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
-
-    <div class="md:col-span-6">
-      <h2 class="font-display text-3xl md:text-4xl mb-8">Talks &amp; conference presentations</h2>
-      <ul class="space-y-6">
-        <li class="border-t border-hair pt-4">
-          <p class="leading-snug">Rapid construction of compact binary sources using meshfree approximation</p>
-          <p class="text-sm text-muted mt-1">Oral presentation, AAPCOS 2023, SINP, Kolkata</p>
-        </li>
-        <li class="border-t border-hair pt-4">
-          <p class="leading-snug">Rapid construction of compact binary sources using meshfree approximation</p>
-          <p class="text-sm text-muted mt-1">Poster, GWPAW 2022, Melbourne, Australia</p>
-        </li>
-        <li class="border-t border-hair pt-4">
-          <p class="leading-snug">Meshfree interpolation of likelihood for fast parameter estimation of CBCs</p>
-          <p class="text-sm text-muted mt-1">AAPS-DACG Workshop, 2021</p>
-        </li>
-        <li class="border-t border-hair pt-4 border-b pb-4">
-          <p class="leading-snug">Meshfree interpolation of likelihood for fast parameter estimation of CBCs</p>
-          <p class="text-sm text-muted mt-1">Poster (online), GWPAW 2021, Hannover, Germany</p>
-        </li>
-      </ul>
-    </div>
-
-    <div class="md:col-span-6">
-      <h3 class="font-display text-xl mb-8">Schools &amp; workshops</h3>
-      <ul class="space-y-6">
-        <li class="border-t border-hair pt-4">
-          <p class="leading-snug">GW Summer School 2023 — Numerical Relativity</p>
-          <p class="text-sm text-muted mt-1">ICTS, Bengaluru</p>
-        </li>
-        <li class="border-t border-hair pt-4">
-          <p class="leading-snug">GW Summer School 2022 — Astrophysics of GW sources, stellar structure and evolution, compact-binary evolutionary history</p>
-          <p class="text-sm text-muted mt-1">ICTS, Bengaluru</p>
-        </li>
-        <li class="border-t border-hair pt-4 border-b pb-4">
-          <p class="leading-snug">Newton–Bhabha Workshop on Gravitational Wave Astronomy</p>
-          <p class="text-sm text-muted mt-1">IUCAA, Pune (2019)</p>
-        </li>
-      </ul>
-    </div>
-
-  </div>
+<div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
+<div class="md:col-span-6">
+<h2 class="font-display text-3xl md:text-4xl mb-8">Talks &amp; conference presentations</h2>
+<ul class="space-y-6">
+<li class="border-t border-hair pt-4">
+<p class="leading-snug">Rapid construction of compact binary sources using meshfree approximation</p>
+<p class="text-sm text-muted mt-1">Oral presentation, AAPCOS 2023, SINP, Kolkata</p>
+</li>
+<li class="border-t border-hair pt-4">
+<p class="leading-snug">Rapid construction of compact binary sources using meshfree approximation</p>
+<p class="text-sm text-muted mt-1">Poster, GWPAW 2022, Melbourne, Australia</p>
+</li>
+<li class="border-t border-hair pt-4">
+<p class="leading-snug">Meshfree interpolation of likelihood for fast parameter estimation of CBCs</p>
+<p class="text-sm text-muted mt-1">AAPS-DACG Workshop, 2021</p>
+</li>
+<li class="border-t border-hair pt-4 border-b pb-4">
+<p class="leading-snug">Meshfree interpolation of likelihood for fast parameter estimation of CBCs</p>
+<p class="text-sm text-muted mt-1">Poster (online), GWPAW 2021, Hannover, Germany</p>
+</li>
+</ul>
+</div>
+<div class="md:col-span-6">
+<h3 class="font-display text-xl mb-8">Schools &amp; workshops</h3>
+<ul class="space-y-6">
+<li class="border-t border-hair pt-4">
+<p class="leading-snug">GW Summer School 2023 — Numerical Relativity</p>
+<p class="text-sm text-muted mt-1">ICTS, Bengaluru</p>
+</li>
+<li class="border-t border-hair pt-4">
+<p class="leading-snug">GW Summer School 2022 — Astrophysics of GW sources, stellar structure and evolution, compact-binary evolutionary history</p>
+<p class="text-sm text-muted mt-1">ICTS, Bengaluru</p>
+</li>
+<li class="border-t border-hair pt-4 border-b pb-4">
+<p class="leading-snug">Newton–Bhabha Workshop on Gravitational Wave Astronomy</p>
+<p class="text-sm text-muted mt-1">IUCAA, Pune (2019)</p>
+</li>
+</ul>
+</div>
+</div>
 </section>
-
 <!-- ============ TEACHING ============ -->
-<section id="teaching" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-3xl md:text-4xl mb-5">Teaching &amp; outreach</h2>
-    <p class="text-muted max-w-xl leading-relaxed">
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="teaching">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-display text-3xl md:text-4xl mb-5">Teaching &amp; outreach</h2>
+<p class="text-muted max-w-xl leading-relaxed">
       This section is being updated — check back soon for course, mentoring, and outreach details.
     </p>
-  </div>
+</div>
 </section>
-
 <!-- ============ HOBBIES ============ -->
-<section id="hobbies" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair">
-  <div class="max-w-6xl mx-auto">
-
-    <div class="max-w-2xl mb-12">
-      <h2 class="font-display text-3xl md:text-4xl mb-5">Hobbies</h2>
-      <p class="text-muted leading-relaxed">
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="hobbies">
+<div class="max-w-6xl mx-auto">
+<div class="max-w-2xl mb-12">
+<h2 class="font-display text-3xl md:text-4xl mb-5">Hobbies</h2>
+<p class="text-muted leading-relaxed">
         Beyond research, I enjoy spending time on a few interests that keep me curious,
         creative, and away from a computer screen.
       </p>
-    </div>
+</div>
 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
-
-      <div class="border-t border-hair pt-5">
-        <div class="flex items-center gap-3 mb-3">
-          <svg class="w-5 h-5 stroke-accent" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-               aria-hidden="true">
-            <path d="M4 7h16v10H4z"/>
-            <circle cx="9" cy="12" r="2.3"/>
-            <path d="M14 10h3M14 13h3"/>
-          </svg>
-          <h3 class="font-display text-lg">Photography</h3>
-        </div>
-        <p class="text-muted leading-relaxed">
+<div class="border-t border-hair pt-5">
+<div class="flex items-center gap-3 mb-3">
+<svg aria-hidden="true" class="w-5 h-5 stroke-accent" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M4 7h16v10H4z"></path>
+<circle cx="9" cy="12" r="2.3"></circle>
+<path d="M14 10h3M14 13h3"></path>
+</svg>
+<h3 class="font-display text-lg">Photography</h3>
+</div>
+<p class="text-muted leading-relaxed">
           A way of slowing down and paying attention to details, light, and the world around me.
         </p>
-      </div>
-
-    <div class="mt-16">
-      <div class="border-t border-hair pt-6 mb-8">
-        <h3 class="font-display text-2xl md:text-3xl mb-3">Exploring Ajanta and Ellora Caves</h3>
-        <p class="text-muted leading-relaxed max-w-2xl">
+</div>
+<div class="mt-16">
+<div class="border-t border-hair pt-6 mb-8">
+<h3 class="font-display text-2xl md:text-3xl mb-3">Exploring Ajanta and Ellora Caves</h3>
+<p class="text-muted leading-relaxed max-w-2xl">
           A small selection of photographs from exploring the caves and their remarkable rock-cut architecture.
         </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-5">
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left" data-gallery-image="images/ajanta-ellora-01.jpg" data-gallery-caption="" aria-label="Open image: Ajanta and Ellora Caves">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/ajanta-ellora-01.jpg"
-                alt="Rock-cut architecture at the Ajanta and Ellora Caves"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-          <figcaption class="gallery-caption text-sm text-muted mt-3">
+</div>
+<div class="grid md:grid-cols-3 gap-5">
+<figure class="group">
+<button aria-label="Open image: Ajanta and Ellora Caves" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/ajanta-ellora-01.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="Rock-cut architecture at the Ajanta and Ellora Caves" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/ajanta-ellora-01.jpg"/>
+</div>
+</button>
+<figcaption class="gallery-caption text-sm text-muted mt-3">
             Kailasa Temple, Maharashtra, India: Carved from a single stone, supported by ancient giants, Overwhelmed by the incredible elephant plinth at Ellora's Kailasa Temple.
           </figcaption>
-        </figure>
-
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left" data-gallery-image="images/ajanta-ellora-02.jpg" data-gallery-caption="" aria-label="Open image: Ajanta and Ellora Caves">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/ajanta-ellora-02.jpg"
-                alt="Stone sculpture inside the Ajanta and Ellora Caves"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-          <figcaption class="gallery-caption text-sm text-muted mt-3">
+</figure>
+<figure class="group">
+<button aria-label="Open image: Ajanta and Ellora Caves" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/ajanta-ellora-02.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="Stone sculpture inside the Ajanta and Ellora Caves" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/ajanta-ellora-02.jpg"/>
+</div>
+</button>
+<figcaption class="gallery-caption text-sm text-muted mt-3">
             Cave 29, Ellora Caves, Maharashtra, India: A spectacular rock-cut relief panel depicting Ravananugraha—the mythological event where the demon king Ravana attempts to shake Mount Kailasa, the abode of Shiva and Parvati. 
             A stunning testament to India's timeless architectural and sculptural genius.
           </figcaption>
-        </figure>
-
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left" data-gallery-image="images/ajanta-ellora-03.jpg" data-gallery-caption="" aria-label="Open image: Ajanta and Ellora Caves">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/ajanta-ellora-03.jpg"
-                alt="Rock-cut sculpture inside the Ajanta and Ellora Caves"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-          <figcaption class="gallery-caption text-sm text-muted mt-3">
+</figure>
+<figure class="group">
+<button aria-label="Open image: Ajanta and Ellora Caves" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/ajanta-ellora-03.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="Rock-cut sculpture inside the Ajanta and Ellora Caves" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/ajanta-ellora-03.jpg"/>
+</div>
+</button>
+<figcaption class="gallery-caption text-sm text-muted mt-3">
             Cave 29, Dhumar Lena, Ellora Caves, India: A captivating ancient relief carving depicting the divine game of dice (Chaupar) between Shiva and Parvati. 
             The dynamic lower panel features frolicking ganas playing around Nandi the bull, showcasing the incredible narrative depth of ancient Indian sculptural masters.
           </figcaption>
-        </figure>
-      </div>
-    </div>
-
-    <div class="mt-20">
-      <div class="border-t border-hair pt-6 mb-8">
-        <h3 class="font-display text-2xl md:text-3xl mb-3">PhD days</h3>
-        <p class="text-muted leading-relaxed max-w-2xl">
+</figure>
+</div>
+</div>
+<div class="mt-20">
+<div class="border-t border-hair pt-6 mb-8">
+<h3 class="font-display text-2xl md:text-3xl mb-3">PhD days</h3>
+<p class="text-muted leading-relaxed max-w-2xl">
           A collection of photographs from my Ph.D. years at IIT Gandhinagar.
         </p>
-      </div>
-
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_1.jpg"
-                  data-gallery-caption="My Desk at my hostel room"
-                  aria-label="Open PhD days photograph 1">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_1.jpg"
-                alt="PhD days photograph 1"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_2.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 2">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_2.jpg"
-                alt="PhD days photograph 2"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_3.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 3">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_3.jpg"
-                alt="PhD days photograph 3"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_4.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 4">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_4.jpg"
-                alt="PhD days photograph 4"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_5.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 5">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_5.jpg"
-                alt="PhD days photograph 5"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_6.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 6">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_6.jpg"
-                alt="PhD days photograph 6"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_7.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 7">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_7.jpg"
-                alt="PhD days photograph 7"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_8.JPG"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 8">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_8.JPG"
-                alt="PhD days photograph 8"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_9.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 9">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_9.jpg"
-                alt="PhD days photograph 9"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_10.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 10">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_10.jpg"
-                alt="PhD days photograph 10"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_11.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 11">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_11.jpg"
-                alt="PhD days photograph 11"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_12.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 12">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_12.jpg"
-                alt="PhD days photograph 12"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_13.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 13">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_13.jpg"
-                alt="PhD days photograph 13"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_14.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 14">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_14.jpg"
-                alt="PhD days photograph 14"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_15.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 15">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_15.jpg"
-                alt="PhD days photograph 15"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_16.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 16">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_16.jpg"
-                alt="PhD days photograph 16"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_17.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 17">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_17.jpg"
-                alt="PhD days photograph 17"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_18.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 18">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_18.jpg"
-                alt="PhD days photograph 18"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_19.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 19">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_19.jpg"
-                alt="PhD days photograph 19"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_20.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 20">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_20.jpg"
-                alt="PhD days photograph 20"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_21.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 21">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_21.jpg"
-                alt="PhD days photograph 21"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_22.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 22">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_22.jpg"
-                alt="PhD days photograph 22"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-        <figure class="group">
-          <button type="button" class="gallery-trigger block w-full text-left"
-                  data-gallery-image="images/phd_days_23.jpg"
-                  data-gallery-caption=""
-                  aria-label="Open PhD days photograph 23">
-            <div class="overflow-hidden rounded-2xl border border-hair">
-              <img
-                src="images/phd_days_23.jpg"
-                alt="PhD days photograph 23"
-                class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                loading="lazy">
-            </div>
-          </button>
-        </figure>
-      </div>
-    </div>
-
-      <!-- <div class="border-t border-hair pt-5">
+</div>
+<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+<figure class="group">
+<button aria-label="Open PhD days photograph 1" class="gallery-trigger block w-full text-left" data-gallery-caption="My Desk at my hostel room" data-gallery-image="images/phd_days_1.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 1" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_1.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 2" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_2.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 2" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_2.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 3" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_3.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 3" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_3.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 4" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_4.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 4" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_4.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 5" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_5.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 5" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_5.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 6" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_6.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 6" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_6.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 7" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_7.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 7" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_7.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 8" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_8.JPG" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 8" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_8.JPG"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 9" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_9.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 9" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_9.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 10" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_10.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 10" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_10.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 11" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_11.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 11" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_11.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 12" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_12.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 12" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_12.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 13" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_13.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 13" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_13.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 14" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_14.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 14" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_14.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 15" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_15.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 15" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_15.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 16" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_16.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 16" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_16.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 17" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_17.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 17" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_17.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 18" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_18.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 18" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_18.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 19" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_19.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 19" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_19.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 20" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_20.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 20" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_20.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 21" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_21.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 21" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_21.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 22" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_22.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 22" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_22.jpg"/>
+</div>
+</button>
+</figure>
+<figure class="group">
+<button aria-label="Open PhD days photograph 23" class="gallery-trigger block w-full text-left" data-gallery-caption="" data-gallery-image="images/phd_days_23.jpg" type="button">
+<div class="overflow-hidden rounded-2xl border border-hair">
+<img alt="PhD days photograph 23" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" src="images/phd_days_23.jpg"/>
+</div>
+</button>
+</figure>
+</div>
+</div>
+<!-- <div class="border-t border-hair pt-5">
         <div class="flex items-center gap-3 mb-3">
           <svg class="w-5 h-5 stroke-accent" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -1574,8 +1280,7 @@
           of looking at people, ideas, or the world.
         </p>
       </div> -->
-
-      <!-- <div class="border-t border-hair pt-5">
+<!-- <div class="border-t border-hair pt-5">
         <div class="flex items-center gap-3 mb-3">
           <svg class="w-5 h-5 stroke-accent" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -1590,8 +1295,7 @@
           Listening to music and discovering new artists whenever I need a change of pace.
         </p>
       </div> -->
-
-      <!-- <div class="border-t border-hair pt-5">
+<!-- <div class="border-t border-hair pt-5">
         <div class="flex items-center gap-3 mb-3">
           <svg class="w-5 h-5 stroke-accent" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -1604,8 +1308,7 @@
           Looking at the night sky simply for the pleasure of it — no data analysis required.
         </p>
       </div> -->
-
-      <!-- <div class="border-t border-hair pt-5">
+<!-- <div class="border-t border-hair pt-5">
         <div class="flex items-center gap-3 mb-3">
           <svg class="w-5 h-5 stroke-accent" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -1619,133 +1322,79 @@
           Long walks, new places, interesting conversations, and anything that sparks curiosity.
         </p>
       </div> -->
-
-    </div>
-  </div>
+</div>
+</div>
 </section>
-
 <!-- ============ CONTACT ============ -->
-<section id="contact" class="px-6 md:px-10 py-20 md:py-28 border-t border-hair bg-alt">
+<section class="px-6 md:px-10 py-20 md:py-28 border-t border-hair" id="contact">
 
-  <div class="merger-motif" style="position:absolute; left:5%; top:12%; width:180px; height:180px; --drift:105s; --rotation:-35deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="48" ry="21" transform="rotate(-35 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="65" ry="29" transform="rotate(-35 100 100)"/>
-      <circle class="body" cx="80" cy="94" r="7"/>
-      <circle class="body" cx="116" cy="105" r="3.5"/>
-      <path class="wave" d="M130 99c10-5 17 6 27 1s16-8 26-3"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:72%; top:7%; width:130px; height:130px; --drift:105s; --rotation:82deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="42" ry="18" transform="rotate(82 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="59" ry="26" transform="rotate(82 100 100)"/>
-      <circle class="body" cx="96" cy="79" r="5"/>
-      <circle class="body" cx="104" cy="119" r="3"/>
-      <path class="wave" d="M116 50c11-6 17 7 28 1s17-8 28-1"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:78%; top:56%; width:220px; height:220px; --drift:108s; --rotation:18deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="52" ry="23" transform="rotate(18 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="69" ry="31" transform="rotate(18 100 100)"/>
-      <circle class="body" cx="81" cy="95" r="7"/>
-      <circle class="body" cx="119" cy="104" r="3.5"/>
-      <path class="wave" d="M130 93c11 7 18-6 28 0s16 9 27 2"/>
-    </svg>
-  </div>
 
-  <div class="merger-motif" style="position:absolute; left:28%; top:67%; width:150px; height:150px; --drift:108s; --rotation:-70deg;">
-    <svg viewBox="0 0 200 200">
-      <ellipse class="orbit" cx="100" cy="100" rx="43" ry="18" transform="rotate(-70 100 100)"/>
-      <ellipse class="trajectory" cx="100" cy="100" rx="60" ry="26" transform="rotate(-70 100 100)"/>
-      <circle class="body" cx="94" cy="80" r="5"/>
-      <circle class="body" cx="107" cy="118" r="3"/>
-      <path class="wave" d="M40 94c10 6 17-6 28 0s17 8 28 1"/>
-    </svg>
-  </div>
-
-  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
-
-    <div class="md:col-span-6">
-      <h2 class="font-display text-3xl md:text-4xl mb-5">Get in touch</h2>
-      <p class="text-muted leading-relaxed max-w-sm">
+<div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14">
+<div class="md:col-span-6">
+<h2 class="font-display text-3xl md:text-4xl mb-5">Get in touch</h2>
+<p class="text-muted leading-relaxed max-w-sm">
         For collaboration, questions about my work, or anything else — email is the best way to reach me.
       </p>
-      <a href="mailto:lalit.pathak@iucaa.in" class="inline-block mt-6 text-lg font-medium underline-hover pb-0.5">
+<a class="inline-block mt-6 text-lg font-medium underline-hover pb-0.5" href="mailto:lalit.pathak@iucaa.in">
         lalit.pathak@iucaa.in
       </a>
-      <p class="text-sm text-muted mt-4">Inter-University Centre for Astronomy and Astrophysics (IUCAA), Pune, India</p>
-    </div>
-
-    <div class="md:col-span-6">
-      <h3 class="text-sm text-muted mb-5">Elsewhere</h3>
-      <ul class="divide-y divide-hair border-t border-b border-hair">
-        <li class="py-4 flex items-center justify-between">
-          <span>ORCID</span>
-          <a href="https://orcid.org/0000-0002-9523-7945" class="underline-hover pb-0.5">0000-0002-9523-7945</a>
-        </li>
-        <li class="py-4 flex items-center justify-between">
-          <span>INSPIRE-HEP</span>
-          <a href="https://inspirehep.net/authors/2964265?ui-citation-summary=true" class="underline-hover pb-0.5">Author profile</a>
-        </li>
-        <li class="py-4 flex items-center justify-between">
-          <span>Google Scholar</span>
-          <a href="https://scholar.google.com/citations?user=KhVSSlMAAAAJ&hl=en" class="underline-hover pb-0.5">Citations</a>
-        </li>
-        <li class="py-4 flex items-center justify-between">
-          <span>GitHub</span>
-          <a href="https://github.com/lalit-pathak" class="underline-hover pb-0.5">lalit-pathak</a>
-        </li>
-        <li class="py-4 flex items-center justify-between">
-          <span>Curriculum Vitae</span>
-          <a href="Lalit_Pathak_Academic_CV.pdf" class="underline-hover pb-0.5">Download PDF</a>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-</main>
-
-
-<!-- ============ IMAGE LIGHTBOX ============ -->
-<div id="image-lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Expanded photograph" aria-hidden="true">
-  <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close enlarged image">&times;</button>
-
-  <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev"
-          aria-label="Previous photograph">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M15 18l-6-6 6-6"/>
-    </svg>
-  </button>
-
-  <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next"
-          aria-label="Next photograph">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M9 18l6-6-6-6"/>
-    </svg>
-  </button>
-
-  <div class="lightbox-inner">
-    <img id="lightbox-image" class="lightbox-image" src="" alt="">
-    <div id="lightbox-caption" class="lightbox-caption"></div>
-  </div>
+<p class="text-sm text-muted mt-4">Inter-University Centre for Astronomy and Astrophysics (IUCAA), Pune, India</p>
 </div>
-
+<div class="md:col-span-6">
+<h3 class="text-sm text-muted mb-5">Elsewhere</h3>
+<ul class="divide-y divide-hair border-t border-b border-hair">
+<li class="py-4 flex items-center justify-between">
+<span>ORCID</span>
+<a class="underline-hover pb-0.5" href="https://orcid.org/0000-0002-9523-7945">0000-0002-9523-7945</a>
+</li>
+<li class="py-4 flex items-center justify-between">
+<span>INSPIRE-HEP</span>
+<a class="underline-hover pb-0.5" href="https://inspirehep.net/authors/2964265?ui-citation-summary=true">Author profile</a>
+</li>
+<li class="py-4 flex items-center justify-between">
+<span>Google Scholar</span>
+<a class="underline-hover pb-0.5" href="https://scholar.google.com/citations?user=KhVSSlMAAAAJ&amp;hl=en">Citations</a>
+</li>
+<li class="py-4 flex items-center justify-between">
+<span>GitHub</span>
+<a class="underline-hover pb-0.5" href="https://github.com/lalit-pathak">lalit-pathak</a>
+</li>
+<li class="py-4 flex items-center justify-between">
+<span>Curriculum Vitae</span>
+<a class="underline-hover pb-0.5" href="Lalit_Pathak_Academic_CV.pdf">Download PDF</a>
+</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<!-- ============ IMAGE LIGHTBOX ============ -->
+<div aria-hidden="true" aria-label="Expanded photograph" aria-modal="true" class="lightbox" id="image-lightbox" role="dialog">
+<button aria-label="Close enlarged image" class="lightbox-close" id="lightbox-close" type="button">×</button>
+<button aria-label="Previous photograph" class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M15 18l-6-6 6-6"></path>
+</svg>
+</button>
+<button aria-label="Next photograph" class="lightbox-nav lightbox-next" id="lightbox-next" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9 18l6-6-6-6"></path>
+</svg>
+</button>
+<div class="lightbox-inner">
+<img alt="" class="lightbox-image" id="lightbox-image" src=""/>
+<div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+</div>
 <!-- ============ FOOTER ============ -->
 <footer class="px-6 md:px-10 py-10 border-t border-hair">
-  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted">
-    <p>© 2026 Lalit Pathak.</p>
-    <a href="#top" class="underline-hover pb-0.5">Back to top</a>
-  </div>
+<div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted">
+<p>© 2026 Lalit Pathak.</p>
+<a class="underline-hover pb-0.5" href="#top">Back to top</a>
+</div>
 </footer>
-
 <script>
   // ---------- Theme toggle (defaults to dark, respects system light preference) ----------
   const root = document.documentElement;
@@ -1897,6 +1546,5 @@
     }
   });
 </script>
-
 </body>
 </html>
