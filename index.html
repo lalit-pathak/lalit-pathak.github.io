@@ -9,21 +9,189 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-          sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        },
-      },
-    },
-  };
-</script>
 <style>
+
+  /* ============================================================
+     SELF-CONTAINED UTILITY CSS
+     The site no longer depends on the Tailwind CDN at runtime.
+     ============================================================ */
+  *, *::before, *::after{ box-sizing:border-box; }
+  img,svg{ max-width:100%; }
+  button,input,textarea{ font:inherit; }
+  button{ background:none; border:0; }
+  .antialiased{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+  .font-sans{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  .font-display{ font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif; }
+  .font-medium{ font-weight:500; }
+  .font-semibold{ font-weight:600; }
+  .tracking-tight{ letter-spacing:-.025em; }
+
+  .relative{ position:relative; }
+  .fixed{ position:fixed; }
+  .top-0{ top:0; }
+  .inset-x-0{ left:0; right:0; }
+  .block{ display:block; }
+  .inline-block{ display:inline-block; }
+  .flex{ display:flex; }
+  .grid{ display:grid; }
+  .hidden{ display:none; }
+  .items-center{ align-items:center; }
+  .justify-between{ justify-content:space-between; }
+  .justify-center{ justify-content:center; }
+  .place-items-center{ place-items:center; }
+  .flex-col{ flex-direction:column; }
+  .flex-wrap{ flex-wrap:wrap; }
+  .shrink-0{ flex-shrink:0; }
+  .text-left{ text-align:left; }
+  .text-center{ text-align:center; }
+  .whitespace-nowrap{ white-space:nowrap; }
+  .overflow-hidden{ overflow:hidden; }
+  .overflow-visible{ overflow:visible; }
+
+  .w-full{ width:100%; }
+  .w-4{ width:1rem; }
+  .w-5{ width:1.25rem; }
+  .w-9{ width:2.25rem; }
+  .h-auto{ height:auto; }
+  .h-4{ height:1rem; }
+  .h-5{ height:1.25rem; }
+  .h-9{ height:2.25rem; }
+  .h-16{ height:4rem; }
+
+  .max-w-sm{ max-width:24rem; }
+  .max-w-lg{ max-width:32rem; }
+  .max-w-xl{ max-width:36rem; }
+  .max-w-2xl{ max-width:42rem; }
+  .max-w-3xl{ max-width:48rem; }
+  .max-w-6xl{ max-width:72rem; }
+  .mx-auto{ margin-left:auto; margin-right:auto; }
+
+  .px-6{ padding-left:1.5rem; padding-right:1.5rem; }
+  .py-3{ padding-top:.75rem; padding-bottom:.75rem; }
+  .py-4{ padding-top:1rem; padding-bottom:1rem; }
+  .py-5{ padding-top:1.25rem; padding-bottom:1.25rem; }
+  .py-6{ padding-top:1.5rem; padding-bottom:1.5rem; }
+  .py-10{ padding-top:2.5rem; padding-bottom:2.5rem; }
+  .py-20{ padding-top:5rem; padding-bottom:5rem; }
+  .pt-4{ padding-top:1rem; }
+  .pt-5{ padding-top:1.25rem; }
+  .pt-6{ padding-top:1.5rem; }
+  .pt-32{ padding-top:8rem; }
+  .pb-0\.5{ padding-bottom:.125rem; }
+  .pb-4{ padding-bottom:1rem; }
+  .pb-20{ padding-bottom:5rem; }
+
+  .mt-1{ margin-top:.25rem; }
+  .mt-2{ margin-top:.5rem; }
+  .mt-3{ margin-top:.75rem; }
+  .mt-4{ margin-top:1rem; }
+  .mt-6{ margin-top:1.5rem; }
+  .mt-7{ margin-top:1.75rem; }
+  .mt-8{ margin-top:2rem; }
+  .mt-9{ margin-top:2.25rem; }
+  .mt-10{ margin-top:2.5rem; }
+  .mt-16{ margin-top:4rem; }
+  .mt-20{ margin-top:5rem; }
+  .mb-2{ margin-bottom:.5rem; }
+  .mb-3{ margin-bottom:.75rem; }
+  .mb-4{ margin-bottom:1rem; }
+  .mb-5{ margin-bottom:1.25rem; }
+  .mb-6{ margin-bottom:1.5rem; }
+  .mb-8{ margin-bottom:2rem; }
+  .mb-12{ margin-bottom:3rem; }
+  .mb-16{ margin-bottom:4rem; }
+  .ml-2{ margin-left:.5rem; }
+  .ml-4{ margin-left:1rem; }
+
+  .gap-2{ gap:.5rem; }
+  .gap-3{ gap:.75rem; }
+  .gap-4{ gap:1rem; }
+  .gap-5{ gap:1.25rem; }
+  .gap-7{ gap:1.75rem; }
+  .gap-10{ gap:2.5rem; }
+  .gap-12{ gap:3rem; }
+  .gap-14{ gap:3.5rem; }
+  .gap-x-4{ column-gap:1rem; }
+  .gap-x-10{ column-gap:2.5rem; }
+  .gap-y-2{ row-gap:.5rem; }
+  .gap-y-10{ row-gap:2.5rem; }
+
+  .space-y-3 > :not([hidden]) ~ :not([hidden]){ margin-top:.75rem; }
+  .space-y-5 > :not([hidden]) ~ :not([hidden]){ margin-top:1.25rem; }
+  .space-y-6 > :not([hidden]) ~ :not([hidden]){ margin-top:1.5rem; }
+  .space-y-7 > :not([hidden]) ~ :not([hidden]){ margin-top:1.75rem; }
+
+  .grid-cols-2{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .aspect-\[3\/4\]{ aspect-ratio:3/4; }
+
+  .text-base{ font-size:1rem; line-height:1.5rem; }
+  .text-lg{ font-size:1.125rem; line-height:1.75rem; }
+  .text-xl{ font-size:1.25rem; line-height:1.75rem; }
+  .text-2xl{ font-size:1.5rem; line-height:2rem; }
+  .text-3xl{ font-size:1.875rem; line-height:2.25rem; }
+  .text-sm{ font-size:.875rem; line-height:1.25rem; }
+  .text-\[1\.05rem\]{ font-size:1.05rem; }
+  .text-\[2\.5rem\]{ font-size:2.5rem; }
+  .leading-snug{ line-height:1.375; }
+  .leading-relaxed{ line-height:1.625; }
+  .leading-\[1\.08\]{ line-height:1.08; }
+
+  .rounded-full{ border-radius:9999px; }
+  .rounded-2xl{ border-radius:1rem; }
+  .border{ border-width:1px; border-style:solid; }
+  .border-t{ border-top-width:1px; border-top-style:solid; }
+  .border-b{ border-bottom-width:1px; border-bottom-style:solid; }
+  .shadow-sm{ box-shadow:0 1px 2px rgba(0,0,0,.05); }
+
+  .z-50{ z-index:50; }
+  .bg-bg{ background:var(--bg); }
+  .bg-bg\/85{ background:color-mix(in srgb,var(--bg) 85%,transparent); }
+  .backdrop-blur{ backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+
+  .transition-colors{ transition-property:color,background-color,border-color,text-decoration-color,fill,stroke; transition-duration:.15s; transition-timing-function:cubic-bezier(.4,0,.2,1); }
+  .transition-transform{ transition-property:transform; transition-duration:.15s; transition-timing-function:cubic-bezier(.4,0,.2,1); }
+  .duration-500{ transition-duration:500ms; }
+
+  .hover\:border-accent:hover{ border-color:var(--accent); }
+  .group-hover\:scale-\[1\.02\]{}
+  .group:hover .group-hover\:scale-\[1\.02\]{ transform:scale(1.02); }
+
+  .divide-y > :not([hidden]) ~ :not([hidden]){ border-top-width:1px; border-top-style:solid; border-color:var(--line); }
+  .divide-hair > :not([hidden]) ~ :not([hidden]){ border-color:var(--line); }
+
+  .md\:hidden{ display:block; }
+  .sm\:grid-cols-2{ display:block; }
+  .sm\:flex-row{ flex-direction:column; }
+  .lg\:grid-cols-3,.lg\:grid-cols-4{ display:block; }
+
+  @media (min-width:640px){
+    .sm\:grid-cols-2{ grid-template-columns:repeat(2,minmax(0,1fr)); display:grid; }
+    .sm\:flex-row{ flex-direction:row; }
+    .sm\:text-5xl{ font-size:3rem; line-height:1; }
+  }
+
+  @media (min-width:768px){
+    .md\:hidden{ display:none; }
+    .md\:flex{ display:flex; }
+    .md\:grid-cols-3{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .md\:grid-cols-12{ grid-template-columns:repeat(12,minmax(0,1fr)); }
+    .md\:col-span-5{ grid-column:span 5 / span 5; }
+    .md\:col-span-6{ grid-column:span 6 / span 6; }
+    .md\:col-span-7{ grid-column:span 7 / span 7; }
+    .md\:px-10{ padding-left:2.5rem; padding-right:2.5rem; }
+    .md\:pt-44{ padding-top:11rem; }
+    .md\:pb-28{ padding-bottom:7rem; }
+    .md\:py-28{ padding-top:7rem; padding-bottom:7rem; }
+    .md\:text-3xl{ font-size:1.875rem; line-height:2.25rem; }
+    .md\:text-4xl{ font-size:2.25rem; line-height:2.5rem; }
+    .md\:text-6xl{ font-size:3.75rem; line-height:1; }
+  }
+
+  @media (min-width:1024px){
+    .lg\:grid-cols-3{ grid-template-columns:repeat(3,minmax(0,1fr)); display:grid; }
+    .lg\:grid-cols-4{ grid-template-columns:repeat(4,minmax(0,1fr)); display:grid; }
+  }
+
   :root{
     --bg: #06070D;
     --bg-alt: #0E1019;
@@ -225,6 +393,11 @@
   @keyframes waveCleanReveal{ 0%{ opacity: 0; } 55%{ opacity: 0; } 100%{ opacity: 1; } }
 
 
+
+  a,button{ -webkit-tap-highlight-color:transparent; }
+  button{ cursor:pointer; }
+  header,main,footer{ min-width:0; }
+
   /* ---------- Subtle compact-binary background field ---------- */
   .merger-field{
     position: fixed;
@@ -244,7 +417,6 @@
     color: var(--text);
     opacity: .14;
     transform-origin: center;
-    animation: mergerDrift var(--drift, 90s) linear infinite;
     will-change: transform;
   }
 
@@ -312,19 +484,6 @@
   html.light-mode .merger-motif .body-ring{ opacity: .52; }
   html.light-mode .merger-motif .body{ opacity: .70; }
   html.light-mode .merger-motif .body-secondary{ opacity: .56; }
-
-  .merger-motif:nth-child(even){
-    animation-direction: reverse;
-  }
-
-  @keyframes mergerDrift{
-    0%   { transform: rotate(var(--rotation, 0deg)) translate3d(0,0,0) scale(1); }
-    25%  { transform: rotate(calc(var(--rotation, 0deg) + 90deg)) translate3d(6px,-5px,0) scale(1.015); }
-    50%  { transform: rotate(calc(var(--rotation, 0deg) + 180deg)) translate3d(11px,-8px,0) scale(1); }
-    75%  { transform: rotate(calc(var(--rotation, 0deg) + 270deg)) translate3d(5px,3px,0) scale(.985); }
-    100% { transform: rotate(calc(var(--rotation, 0deg) + 360deg)) translate3d(0,0,0) scale(1); }
-  }
-
   /* Keep page content above the background field. */
   header, main, footer{
     position: relative;
@@ -347,15 +506,7 @@
     position: relative;
     z-index: 2;
   }
-
-
-  @media (prefers-reduced-motion: reduce){
-    .merger-motif{
-      animation: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce){
+@media (prefers-reduced-motion: reduce){
     html{ scroll-behavior: auto; }
     .wave-noisy{ animation: none; opacity: 0; }
     .wave-clean{ animation: none; opacity: 1; }
@@ -400,7 +551,7 @@
 <body class="font-sans antialiased">
 <!-- ============ BACKGROUND COMPACT-BINARY MERGER FIELD ============ -->
 <div aria-hidden="true" class="merger-field">
-<div class="merger-motif" style="left:-5%; top:8%; width:250px; height:250px; --drift:118s; --rotation:-16deg;">
+<div class="merger-motif" style="left:-5%; top:8%; width:250px; height:250px; --rotation:-16deg;">
   <svg viewBox="0 0 200 200" aria-hidden="true">
     <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
     <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
@@ -430,7 +581,7 @@
       C126 87, 111 78, 96 80"></path>
   </svg>
 </div>
-<div class="merger-motif" style="left:73%; top:4%; width:410px; height:410px; --drift:136s; --rotation:22deg;">
+<div class="merger-motif" style="left:73%; top:4%; width:410px; height:410px; --rotation:22deg;">
   <svg viewBox="0 0 200 200" aria-hidden="true">
     <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
     <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
@@ -460,7 +611,7 @@
       C126 87, 111 78, 96 80"></path>
   </svg>
 </div>
-<div class="merger-motif" style="left:27%; top:29%; width:300px; height:300px; --drift:101s; --rotation:-24deg;">
+<div class="merger-motif" style="left:27%; top:29%; width:300px; height:300px; --rotation:-24deg;">
   <svg viewBox="0 0 200 200" aria-hidden="true">
     <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
     <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
@@ -490,7 +641,7 @@
       C126 87, 111 78, 96 80"></path>
   </svg>
 </div>
-<div class="merger-motif" style="left:88%; top:43%; width:245px; height:245px; --drift:112s; --rotation:18deg;">
+<div class="merger-motif" style="left:88%; top:43%; width:245px; height:245px; --rotation:18deg;">
   <svg viewBox="0 0 200 200" aria-hidden="true">
     <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
     <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
@@ -520,7 +671,7 @@
       C126 87, 111 78, 96 80"></path>
   </svg>
 </div>
-<div class="merger-motif" style="left:3%; top:67%; width:400px; height:400px; --drift:129s; --rotation:28deg;">
+<div class="merger-motif" style="left:3%; top:67%; width:400px; height:400px; --rotation:28deg;">
   <svg viewBox="0 0 200 200" aria-hidden="true">
     <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
     <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
@@ -550,7 +701,7 @@
       C126 87, 111 78, 96 80"></path>
   </svg>
 </div>
-<div class="merger-motif" style="left:52%; top:78%; width:310px; height:310px; --drift:109s; --rotation:-14deg;">
+<div class="merger-motif" style="left:52%; top:78%; width:310px; height:310px; --rotation:-14deg;">
   <svg viewBox="0 0 200 200" aria-hidden="true">
     <ellipse class="orbit orbit-outer" cx="100" cy="108" rx="78" ry="39" transform="rotate(-17 100 108)"></ellipse>
     <ellipse class="orbit orbit-mid" cx="100" cy="108" rx="61" ry="30" transform="rotate(-17 100 108)"></ellipse>
