@@ -230,14 +230,7 @@
   /* Section backgrounds are painted on a separate layer so animated
      merger motifs can continue naturally across section boundaries. */
   .bg-alt{ background: transparent; position: relative; }
-  .bg-alt::before{
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--bg-alt);
-    z-index: 0;
-    pointer-events: none;
-  }
+  
   .border-hair{ border-color: var(--line); }
   .divide-hair > * + *{ border-color: var(--line); }
   .text-muted{ color: var(--text-muted); }
@@ -399,26 +392,9 @@
   header,main,footer{ min-width:0; }
 
   /* ---------- Subtle compact-binary background field ---------- */
-  .merger-field{
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-    opacity: .9;
-  }
+  
 
-  .merger-motif{
-    position: absolute;
-    width: 170px;
-    height: 170px;
-    color: var(--text);
-    opacity: .14;
-    transform-origin: center;
-    will-change: transform;
-  }
+  
 
   .merger-motif svg{
     width: 100%;
@@ -466,15 +442,9 @@
     opacity: .62;
   }
 
-  html:not(.light-mode) .merger-motif{
-    color: rgba(236,237,243,.95);
-    opacity: .14;
-  }
+  html:not(.light-mode) 
 
-  html.light-mode .merger-motif{
-    color: rgba(55,76,88,.82);
-    opacity: .135;
-  }
+  html.light-mode 
 
   html.light-mode .merger-motif .orbit-outer{ opacity: .42; }
   html.light-mode .merger-motif .orbit-mid{ opacity: .54; }
@@ -498,14 +468,9 @@
      Sections intentionally do not create isolated stacking contexts: this
      lets a motif that crosses a boundary remain visible in the neighboring
      section, just like a continuous background field. */
-  main > section{
-    position: relative;
-  }
+  
 
-  main > section > *:not(.merger-motif){
-    position: relative;
-    z-index: 2;
-  }
+  
 @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior: auto; }
     .wave-noisy{ animation: none; opacity: 0; }
@@ -544,7 +509,7 @@
   }
   .timeline-item:last-child::after{ display: none; }
   /* Continuous global merger field for the sections that previously had local motifs. */
-  #research, #lvk, #talks, #contact { background: transparent !important; }
+  
 
 </style>
 </head>
